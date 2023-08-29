@@ -2,7 +2,114 @@
 
 En este archivo se muestra como solucionar cada apartado de la práctica 1 de la asignatura de Legsilación y Seguridad Informática de la facultad de informática de la universsidad de la Coruña (UDC).
 
-## a) Configure su máquina virtual de laboratorio con los datos proporcionados por el profesor. Analice los ficheros básicos de configuración (interfaces, hosts, resolv.conf, nsswitch.conf, sources.list, etc.)
+### Apartado A
+
+Configure su máquina virtual de laboratorio con los datos proporcionados por el profesor.
+Analice los ficheros básicos de configuración (interfaces, hosts, resolv.conf,
+nsswitch.conf, sources.list, etc.)
+
+La configuración de la máquina virtual dependerá de las IPs que sean proporcionadas por el profesor para nosotros y para nuestro compañero. Para configurar la mñaquina tenemos que editar el fichero `/etc/network/interfaces:`
+
+El siguiente ejemplo se correspone con las IPs 10.11.48.25 y 10.11.50.25
+```
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+# source /etc/network/interfaces.d/*
+# The loopback network interface
+auto lo ens33 ens34
+iface lo inet loopback
+
+iface ens33 inet static
+	address 10.11.48.25
+	netmask 255.255.254.0
+	broadcast 10.11.49.255
+	network 10.11.48.0
+	gateway 10.11.48.1
+
+iface ens34 inet static
+	address 10.11.50.25
+	netmask 255.255.254.0
+	broadcast 10.11.51.255
+	network 10.11.50.0
+```
+
+`/etc/hosts`:
+
+En sistemas Debian (y en sistemas basados en Debian, como Ubuntu), el archivo /etc/hosts es un archivo de configuración que se utiliza para mapear nombres de host a direcciones IP antes de consultar servidores DNS. Proporciona una forma de resolver nombres de host localmente en la máquina, sin necesidad de hacer consultas a servidores DNS externos.
+
+```
+127.0.0.1	localhost
+10.11.48.50	debian
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+```
+
+`/etc/resolv.conf`:
+
+El archivo /etc/resolv.conf en sistemas Debian (y sistemas basados en Debian, como Ubuntu) es otro archivo de configuración importante. Contiene información sobre la configuración de los servidores DNS que el sistema utilizará para resolver nombres de dominio en direcciones IP. Este archivo determina cómo se resuelven las consultas DNS en tu sistema.
+Además de nameserver, puede incluir otras directivas para configurar opciones adicionales, como búsqueda de dominio, dominio predeterminado, etc
+
+```
+domain udc.pri
+search udc.pri
+nameserver 10.8.12.49
+nameserver 10.8.12.50
+nameserver 10.8.12.47
+```
+
+`/etc/nsswitch.conf`:
+
+El archivo /etc/nsswitch.conf en sistemas Debian (y en sistemas basados en Debian, como Ubuntu) es un archivo de configuración que define el orden y las fuentes de búsqueda que se utilizan para resolver diferentes tipos de consultas de nombres en el sistema. NSS significa "Name Service Switch" (Cambio de Servicio de Nombres), y este archivo determina cómo se busca y resuelve la información de nombres como usuarios, grupos, hosts y otros datos en el sistema.
+
+```
+# /etc/nsswitch.conf
+#
+# Example configuration of GNU Name Service Switch functionality.
+# If you have the `glibc-doc-reference' and `info' packages installed, try:
+# `info libc "Name Service Switch"' for information about this file.
+
+passwd:         files systemd
+group:          files systemd
+shadow:         files
+gshadow:        files
+
+hosts:          files mdns4_minimal [NOTFOUND=return] dns myhostname
+networks:       files
+
+protocols:      db files
+services:       db files
+ethers:         db files
+rpc:            db files
+
+netgroup:       nis
+```
+
+`/etc/apt/sources.list`:
+
+Este archivo en sistemas Debian y sistemas basados en Debian (como Ubuntu) es un archivo de configuración clave para el sistema de administración de paquetes APT (Advanced Package Tool). A través de este archivo, se especifican los repositorios desde los cuales el sistema puede obtener paquetes y actualizaciones de software.
+Cada línea en el archivo sources.list corresponde a un repositorio y proporciona la ubicación de los archivos de índice de paquetes (archivos .deb) para los diferentes componentes del sistema, como "main", "contrib", "non-free", etc.
+
+```
+deb http://deb.debian.org/debian/ buster main
+deb-src http://deb.debian.org/debian/ buster main
+
+deb https://deb.debian.org/debian-security buster-security main contrib
+deb-src https://deb.debian.org/debian-security buster-security main contrib
+
+deb http://security.debian.org/debian-security buster/updates main
+deb-src http://security.debian.org/debian-security buster/updates main
+```
+
+
+
+
+
+
+
+
 ## b) ¿Qué distro y versión tiene la máquina inicialmente entregada?. Actualice su máquina a la última versión estable disponible.
 ## c) Identifique la secuencia completa de arranque de una máquina basada en la distribución de referencia (desde la pulsación del botón de arranque hasta la pantalla de login). ¿Qué target por defecto tiene su máquina?. ¿Cómo podría cambiar el target de arranque?. ¿Qué targets tiene su sistema y en qué estado se encuentran?. ¿Y los services?. Obtenga la relación de servicios de su sistema y su estado. ¿Qué otro tipo de unidades existen?.
 ## d) Determine los tiempos aproximados de botado de su kernel y del userspace. Obtenga la relación de los tiempos de ejecución de los services de su sistema.
