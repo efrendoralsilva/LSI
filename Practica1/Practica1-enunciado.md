@@ -275,6 +275,47 @@ Recuerda que systemd-timesyncd es útil para mantener la hora del sistema precis
 
 ## f) Identifique y cambie los principales parámetros de su segundo interface de red (ens34). Configure un segundo interface lógico. Al terminar, déjelo como estaba.
 ## g) ¿Qué rutas (routing) están definidas en su sistema?. Incluya una nueva ruta estática a una determinada red.
+
+Para verificar las rutas (routing) definidas en tu sistema Debian y agregar una nueva ruta estática a una red específica, sigue estos pasos detallados:
+
+Paso 1: Verificar las rutas actuales:
+
+Para ver las rutas actuales en tu sistema Debian, puedes utilizar el comando ip o el comando route. Vamos a utilizar ip en este ejemplo:
+```
+ip route show
+```
+Este comando mostrará una lista de las rutas actuales en tu sistema, incluyendo las rutas predeterminadas y las rutas específicas.
+
+Paso 2: Agregar una nueva ruta estática:
+
+Supongamos que deseas agregar una nueva ruta estática a la red 192.168.1.0/24 a través de una puerta de enlace (gateway) con la dirección IP 192.168.0.1. Puedes hacerlo con el siguiente comando:
+```
+ip route add 192.168.1.0/24 via 192.168.0.1
+```
+Este comando agrega una nueva ruta estática que dice que cualquier tráfico destinado a la red 192.168.1.0/24 debe ser enviado a través de la puerta de enlace con la dirección IP 192.168.0.1.
+
+Si necesitas que esta ruta sea persistente y se conserve después de reiniciar el sistema, debes agregarla al archivo de configuración correspondiente. En sistemas basados en Debian, puedes hacerlo editando el archivo /etc/network/interfaces o utilizando la herramienta ip de systemd-networkd si estás usando systemd. Aquí hay un ejemplo utilizando systemd-networkd:
+```
+sudo nano /etc/systemd/network/50-static-route.network
+```
+Dentro del archivo, puedes agregar las siguientes líneas para definir la ruta estática:
+```
+[Match]
+Name=nombre_de_interfaz
+
+[Network]
+Address=192.168.1.0/24
+Gateway=192.168.0.1
+```
+Reemplaza nombre_de_interfaz con el nombre de la interfaz de red a través de la cual deseas que pase el tráfico, guarda el archivo y ciérralo.
+Luego, puedes aplicar la configuración utilizando el siguiente comando:
+```
+sudo systemctl restart systemd-networkd
+```
+Esto hará que la ruta estática se active y persista incluso después de reiniciar el sistema.
+Recuerda que las rutas estáticas son útiles para dirigir el tráfico hacia redes específicas a través de puertas de enlace definidas manualmente cuando no se utiliza un enrutamiento dinámico. Asegúrate de ajustar las direcciones IP y las máscaras de red según tus necesidades específicas.
+
+
 ## h) En el apartado d) se ha familiarizado con los services que corren en su sistema. ¿Son necesarios todos ellos?. Si identifica servicios no necesarios, proceda adecuadamente. Una limpieza no le vendrá mal a su equipo, tanto desde el punto de vista de la seguridad, como del rendimiento.
 ## i) Diseñe y configure un pequeño “script” y defina la correspondiente unidad de tipo service para que se ejecute en el proceso de botado de su máquina.
 ## j) Identifique las conexiones de red abiertas a y desde su equipo.
