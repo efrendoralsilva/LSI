@@ -206,6 +206,37 @@ Paso 10: Otros tipos de unidades:
 Además de los objetivos y los servicios, systemd también gestiona otros tipos de unidades, como sockets, dispositivos, montajes y más. Puedes listarlos utilizando comandos similares, reemplazando --type=service con el tipo de unidad que deseas consultar (por ejemplo, --type=socket, --type=device, etc.).
 
 ## d) Determine los tiempos aproximados de botado de su kernel y del userspace. Obtenga la relación de los tiempos de ejecución de los services de su sistema.
+Determinar los tiempos aproximados de arranque del kernel y del userspace, así como obtener la relación de los tiempos de ejecución de los servicios en un sistema Debian es un proceso detallado que requiere la herramienta systemd-analyze. A continuación, te mostraré cómo realizar esto paso a paso:
+
+Paso 1: Determinar el tiempo de arranque del kernel y del userspace:
+```
+systemd-analyze
+```
+Este comando proporcionará una visión general de los tiempos de arranque del kernel y del userspace, así como el tiempo total de inicio.
+
+Para obtener un desglose más detallado de los tiempos de arranque, puedes ejecutar:
+```
+systemd-analyze blame
+```
+Esto mostrará una lista de servicios y el tiempo que cada uno tomó para iniciar. Puedes ver qué servicios están tomando más tiempo durante el proceso de arranque.
+
+Paso 2: Obtener la relación de los tiempos de ejecución de los servicios:
+
+Para obtener una relación más detallada de los tiempos de ejecución de los servicios, sigue estos pasos:
+Ejecuta el siguiente comando para obtener una lista de servicios y sus tiempos de inicio:
+```
+systemd-analyze critical-chain
+```
+Este comando mostrará una lista de servicios que son críticos para el inicio y sus tiempos de inicio. Te dará una idea de cuáles servicios pueden estar causando retrasos durante el inicio.
+
+Si deseas ver una lista más completa de todos los servicios y sus tiempos de inicio, puedes utilizar:
+```
+systemctl list-units --type=service --all
+```
+Esto mostrará una lista completa de servicios con información sobre su estado y tiempo de inicio.
+
+Recuerda que los tiempos de inicio pueden variar según la configuración y el hardware de tu sistema. Presta atención a los servicios que pueden estar causando retrasos y considera si alguno de ellos es necesario para tu uso cotidiano. Puedes desactivar o ajustar la prioridad de los servicios para mejorar el tiempo de inicio si es necesario.
+
 ## e) Investigue si alguno de los servicios del sistema falla. Pruebe algunas de las opciones del sistema de registro journald. Obtenga toda la información journald referente al proceso de botado de la máquina. ¿Qué hace el systemd-timesyncd?.
 ## f) Identifique y cambie los principales parámetros de su segundo interface de red (ens34).Configure un segundo interface lógico. Al terminar, déjelo como estaba.
 ## g) ¿Qué rutas (routing) están definidas en su sistema?. Incluya una nueva ruta estática a una determinada red.
