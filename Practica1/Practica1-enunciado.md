@@ -111,6 +111,53 @@ deb-src http://security.debian.org/debian-security buster/updates main
 
 
 ## b) ¿Qué distro y versión tiene la máquina inicialmente entregada?. Actualice su máquina a la última versión estable disponible.
+
+Paso 1: Verificar la versión actual de Debian:
+Para saber la versión actual de Debian en tu máquina, puedes ejecutar el siguiente comando en la terminal:
+```
+cat /etc/os-release
+```
+Paso 2: Actualizar la lista de paquetes:
+Antes de actualizar el sistema, es importante actualizar la lista de paquetes para asegurarte de que obtendrás la última versión de los paquetes disponibles. Ejecuta el siguiente comando:
+```
+sudo apt update
+```
+Paso 3: Realizar la actualización del sistema:
+Una vez que la lista de paquetes esté actualizada, puedes proceder a actualizar el sistema. Utiliza el siguiente comando:
+```
+sudo apt upgrade
+```
+Este comando actualizará todos los paquetes instalados a sus últimas versiones disponibles
+
+Paso 4: Actualizar a la última versión estable de Debian:
+Para actualizar Debian 11 a la última versión estable disponible, primero debes modificar el archivo /etc/apt/sources.list para apuntar a la nueva versión. Esto se hace reemplazando las referencias a "bullseye" (que es la versión de Debian 11) por "bookworm" (que podría ser la próxima versión en el momento de tu actualización). Ten en cuenta que los nombres pueden cambiar en el futuro, así que asegúrate de verificar la última versión estable de Debian antes de continuar.
+Abre el archivo /etc/apt/sources.list con un editor de texto como nano o vim:
+```
+sudo nano /etc/apt/sources.list
+```
+Dentro del archivo, busca las líneas que contienen "bullseye" y reemplázalas por "bookworm". Debería verse algo como esto:
+```
+deb http://deb.debian.org/debian/ bullseye main
+deb-src http://deb.debian.org/debian/ bullseye main
+```
+Cámbialas a:
+```
+deb http://deb.debian.org/debian/ bookworm main
+deb-src http://deb.debian.org/debian/ bookworm main
+```
+Una vez modificado este archivo realizamos la actualizacion de paquetes y de la maquina:
+```
+sudo apt update
+```
+```
+sudo apt dist-upgrade
+```
+Una vez que se complete el proceso de actualización, reinicia la máquina para aplicar los cambios:
+```
+sudo reboot
+```
+
+
 ## c) Identifique la secuencia completa de arranque de una máquina basada en la distribución de referencia (desde la pulsación del botón de arranque hasta la pantalla de login). ¿Qué target por defecto tiene su máquina?. ¿Cómo podría cambiar el target de arranque?. ¿Qué targets tiene su sistema y en qué estado se encuentran?. ¿Y los services?. Obtenga la relación de servicios de su sistema y su estado. ¿Qué otro tipo de unidades existen?.
 ## d) Determine los tiempos aproximados de botado de su kernel y del userspace. Obtenga la relación de los tiempos de ejecución de los services de su sistema.
 ## e) Investigue si alguno de los servicios del sistema falla. Pruebe algunas de las opciones del sistema de registro journald. Obtenga toda la información journald referente al proceso de botado de la máquina. ¿Qué hace el systemd-timesyncd?.
