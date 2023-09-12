@@ -159,6 +159,52 @@ sudo reboot
 
 
 ## c) Identifique la secuencia completa de arranque de una máquina basada en la distribución de referencia (desde la pulsación del botón de arranque hasta la pantalla de login). ¿Qué target por defecto tiene su máquina?. ¿Cómo podría cambiar el target de arranque?. ¿Qué targets tiene su sistema y en qué estado se encuentran?. ¿Y los services?. Obtenga la relación de servicios de su sistema y su estado. ¿Qué otro tipo de unidades existen?.
+Paso 1: Encender la Máquina:
+
+Presiona el botón de encendido o la secuencia correspondiente para iniciar la máquina.
+
+Paso 2: BIOS/UEFI:
+
+La máquina realiza una verificación inicial del hardware (POST) y luego se inicia el firmware BIOS o UEFI. Esto es lo primero que ocurre después de encender la máquina.
+
+Paso 3: Carga del gestor de arranque:
+
+El firmware BIOS/UEFI carga el gestor de arranque. En la mayoría de las distribuciones de Debian, el gestor de arranque utilizado es GRUB (Grand Unified Bootloader). GRUB muestra un menú de arranque donde puedes seleccionar el sistema operativo o la configuración que deseas iniciar.
+
+Paso 4: Inicio del Kernel de Linux:
+
+Una vez que seleccionas Debian en el menú de GRUB, el Kernel de Linux se carga en la memoria y comienza su inicialización. El Kernel es el núcleo del sistema operativo y se encarga de interactuar con el hardware.
+
+Paso 5: Proceso de inicio del sistema:
+
+El Kernel de Linux inicia el proceso init o su sucesor, que en sistemas modernos suele ser systemd. systemd es un sistema de inicio y administración de servicios que maneja el proceso de arranque.
+
+Paso 6: Objetivo (Target) de inicio por defecto:
+
+El sistema tiene un "objetivo de inicio" (target) por defecto, que define qué servicios y recursos se deben iniciar. El objetivo de inicio por defecto en Debian suele ser multi-user.target o graphical.target, dependiendo de si estás en un entorno de línea de comandos o entorno gráfico. Puedes verificar el objetivo de inicio actual con el siguiente comando:
+```
+systemctl get-default
+```
+Paso 7: Cambiar el objetivo de inicio:
+
+Puedes cambiar el objetivo de inicio utilizando el siguiente comando:
+```
+sudo systemctl set-default nombre_del_target
+```
+Reemplaza nombre_del_target con el nombre del objetivo que desees establecer, como multi-user.target o graphical.target.
+
+Paso 8: Listar los objetivos de inicio y su estado:
+
+Puedes listar los objetivos de inicio disponibles y su estado con el siguiente comando:
+```
+systemctl list-units --type=target
+```
+Esto mostrará una lista de servicios en ejecución y su estado.
+
+Paso 10: Otros tipos de unidades:
+
+Además de los objetivos y los servicios, systemd también gestiona otros tipos de unidades, como sockets, dispositivos, montajes y más. Puedes listarlos utilizando comandos similares, reemplazando --type=service con el tipo de unidad que deseas consultar (por ejemplo, --type=socket, --type=device, etc.).
+
 ## d) Determine los tiempos aproximados de botado de su kernel y del userspace. Obtenga la relación de los tiempos de ejecución de los services de su sistema.
 ## e) Investigue si alguno de los servicios del sistema falla. Pruebe algunas de las opciones del sistema de registro journald. Obtenga toda la información journald referente al proceso de botado de la máquina. ¿Qué hace el systemd-timesyncd?.
 ## f) Identifique y cambie los principales parámetros de su segundo interface de red (ens34).Configure un segundo interface lógico. Al terminar, déjelo como estaba.
