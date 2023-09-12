@@ -238,7 +238,42 @@ Esto mostrará una lista completa de servicios con información sobre su estado 
 Recuerda que los tiempos de inicio pueden variar según la configuración y el hardware de tu sistema. Presta atención a los servicios que pueden estar causando retrasos y considera si alguno de ellos es necesario para tu uso cotidiano. Puedes desactivar o ajustar la prioridad de los servicios para mejorar el tiempo de inicio si es necesario.
 
 ## e) Investigue si alguno de los servicios del sistema falla. Pruebe algunas de las opciones del sistema de registro journald. Obtenga toda la información journald referente al proceso de botado de la máquina. ¿Qué hace el systemd-timesyncd?.
-## f) Identifique y cambie los principales parámetros de su segundo interface de red (ens34).Configure un segundo interface lógico. Al terminar, déjelo como estaba.
+
+Para investigar si alguno de los servicios del sistema falla y obtener información del registro journald referente al proceso de arranque de la máquina en Debian, así como comprender qué hace el servicio systemd-timesyncd, sigue estos pasos detallados:
+
+Paso 1: Verificar el estado de los servicios:
+
+Para verificar si alguno de los servicios del sistema ha fallado, puedes utilizar el comando systemctl. Abre una terminal en tu sistema Debian y ejecuta lo siguiente:
+```
+systemctl --failed
+```
+Este comando mostrará una lista de servicios que han fallado.
+
+Paso 2: Analizar el registro journald:
+
+Systemd utiliza el servicio de registro journald para almacenar registros del sistema. Puedes usar el comando journalctl para acceder a estos registros. Para obtener información sobre el proceso de arranque de la máquina, ejecuta el siguiente comando:
+```
+journalctl -b
+```
+Este comando mostrará los registros desde el último inicio del sistema. Puedes utilizar las teclas de flecha o la barra de desplazamiento para navegar por los registros. Presta atención a cualquier mensaje de error o advertencia que puedas encontrar durante el proceso de arranque.
+
+Paso 3: Investigar el systemd-timesyncd:
+
+El servicio systemd-timesyncd es un servicio que se utiliza para sincronizar la hora del sistema con servidores de tiempo en Internet. Puedes obtener más información sobre este servicio ejecutando:
+```
+systemctl status systemd-timesyncd
+```
+Esto mostrará información sobre el estado actual del servicio y si ha estado funcionando correctamente.
+
+Si deseas obtener más detalles sobre cómo está configurado systemd-timesyncd, puedes consultar su archivo de configuración:
+```
+cat /etc/systemd/timesyncd.conf
+```
+Esto mostrará la configuración actual del servicio de sincronización de tiempo.
+Recuerda que systemd-timesyncd es útil para mantener la hora del sistema precisa, lo que es importante para muchas aplicaciones y servicios que dependen de un reloj preciso.
+
+
+## f) Identifique y cambie los principales parámetros de su segundo interface de red (ens34). Configure un segundo interface lógico. Al terminar, déjelo como estaba.
 ## g) ¿Qué rutas (routing) están definidas en su sistema?. Incluya una nueva ruta estática a una determinada red.
 ## h) En el apartado d) se ha familiarizado con los services que corren en su sistema. ¿Son necesarios todos ellos?. Si identifica servicios no necesarios, proceda adecuadamente. Una limpieza no le vendrá mal a su equipo, tanto desde el punto de vista de la seguridad, como del rendimiento.
 ## i) Diseñe y configure un pequeño “script” y defina la correspondiente unidad de tipo service para que se ejecute en el proceso de botado de su máquina.
