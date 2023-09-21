@@ -185,25 +185,36 @@ El sistema tiene un "objetivo de inicio" (target) por defecto, que define qué s
 ```
 systemctl get-default
 ```
+El target que viene por defecto en la maquina es el ***graphical.target*** que inicia el sistema con una interfaz grafica ( en nuestro caso no nos hara falta) por lo que lo cambiaremos a ***multi-user.target*** que ser mas adecuado para un servidor debian.
+
 Paso 7: Cambiar el objetivo de inicio:
 
 Puedes cambiar el objetivo de inicio utilizando el siguiente comando:
 ```
-sudo systemctl set-default nombre_del_target
+sudo systemctl set-default multi-user.target
 ```
-Reemplaza nombre_del_target con el nombre del objetivo que desees establecer, como multi-user.target o graphical.target.
 
 Paso 8: Listar los objetivos de inicio y su estado:
 
-Puedes listar los objetivos de inicio disponibles y su estado con el siguiente comando:
+Puedes listar los targets del sistema y su estado:
 ```
-systemctl list-units --type=target
+ systemctl list-unit-files --type=target
 ```
 Esto mostrará una lista de servicios en ejecución y su estado.
 
 Paso 10: Otros tipos de unidades:
 
-Además de los objetivos y los servicios, systemd también gestiona otros tipos de unidades, como sockets, dispositivos, montajes y más. Puedes listarlos utilizando comandos similares, reemplazando --type=service con el tipo de unidad que deseas consultar (por ejemplo, --type=socket, --type=device, etc.).
+Para listar los servicios de nuestro sistem:
+```
+ systemctl list-unit-files --type=service
+
+```
+
+Además de los objetivos y los servicios, systemd también gestiona otros tipos de unidades, como sockets, dispositivos, montajes y más. Puedes ver cuales son utilizando el siguiente comando: 
+```
+systemctl list-units -t help
+```
+Para ver alguno en concreto se puede utilizar los comandos que utilizamos anteriormente cambiando service por el que nos interese
 
 ## d) Determine los tiempos aproximados de botado de su kernel y del userspace. Obtenga la relación de los tiempos de ejecución de los services de su sistema.
 Determinar los tiempos aproximados de arranque del kernel y del userspace, así como obtener la relación de los tiempos de ejecución de los servicios en un sistema Debian es un proceso detallado que requiere la herramienta systemd-analyze. A continuación, te mostraré cómo realizar esto paso a paso:
@@ -288,11 +299,11 @@ Este comando mostrará una lista de las rutas actuales en tu sistema, incluyendo
 
 Paso 2: Agregar una nueva ruta estática:
 
-Supongamos que deseas agregar una nueva ruta estática a la red 192.168.1.0/24 a través de una puerta de enlace (gateway) con la dirección IP 192.168.0.1. Puedes hacerlo con el siguiente comando:
+Puedes hacerlo con el siguiente comando:
 ```
-ip route add 192.168.1.0/24 via 192.168.0.1
+ip route add 10.11.52.0/24 via 10.11.48.1
 ```
-Este comando agrega una nueva ruta estática que dice que cualquier tráfico destinado a la red 192.168.1.0/24 debe ser enviado a través de la puerta de enlace con la dirección IP 192.168.0.1.
+Este comando agrega una nueva ruta estática que dice que cualquier tráfico destinado a la red 10.11.52.0 ira a tarves de la puerta de enlace que le indiquemos.
 
 Si necesitas que esta ruta sea persistente y se conserve después de reiniciar el sistema, debes agregarla al archivo de configuración correspondiente. En sistemas basados en Debian, puedes hacerlo editando el archivo /etc/network/interfaces o utilizando la herramienta ip de systemd-networkd si estás usando systemd. Aquí hay un ejemplo utilizando systemd-networkd:
 ```
@@ -317,6 +328,237 @@ Recuerda que las rutas estáticas son útiles para dirigir el tráfico hacia red
 
 
 ## h) En el apartado d) se ha familiarizado con los services que corren en su sistema. ¿Son necesarios todos ellos?. Si identifica servicios no necesarios, proceda adecuadamente. Una limpieza no le vendrá mal a su equipo, tanto desde el punto de vista de la seguridad, como del rendimiento.
+
+Para listar los servicios del sistema y su estado podemos utilizar el comando:
+```
+systemctl list-unit-files --type=service
+```
+Los servicios que nos encontramos ENABLED SON:
+
+**1. accounts-daemon.service**
+
+Su función principal es gestionar las cuentas de usuario y las configuraciones relacionadas con las cuentas.
+
+**2. anacron.service** 
+
+Es un servicio que asegura que las tareas programadas se ejecuten de manera confiable, incluso en sistemas que no están siempre encendidos o que tienen tiempos de inactividad.
+
+**3. apparmor.service**
+
+AppArmor limita los programas de acuerdo con un conjunto de reglas que especifican a qué archivos puede acceder un programa determinado.
+
+**4. avahi-daemon.service**
+
+El objetivo principal de Avahi es facilitar la configuración automática y la descubrimiento de servicios en redes locales sin la necesidad de un servidor de nombres centralizado
+
+Este servicio se utilizar para disponer de bluettoh en nuestra maquina.
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop avahi-daemon.service
+```
+```
+systemctl disable avahi-daemon.service
+```
+
+```
+systemctl mask avahi-daemon.service
+```
+
+
+**5. bluetooth.service**
+
+Este servicio se utilizar para disponer de bluetooh en nuestra maquina.
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop bluetooth.service
+```
+```
+systemctl disable bluetooth.service
+```
+```
+systemctl mask bluetooth.service
+```
+**6. console-setup.service**
+
+Se encarga de configurar la disposición del teclado y otras características relacionadas con la consola del sistema, como la configuración de la fuente utilizada en la consola y las teclas de función especiales
+
+**7. cron.service**
+
+Se utiliza para administrar el cron, un programa que permite la programación de tareas automatizadas en un sistema. El cron es una herramienta poderosa que permite a los usuarios y administradores programar la ejecución de comandos, scripts y programas en momentos específicos o en intervalos regulares.
+
+**8.  cups-browsed.service**
+
+Este paquete proporciona cups-browsed, un demonio que navega por las transmisiones Bonjour de las impresoras remotas compartidas por CUPS y hace que las impresoras estén disponibles localmente, reemplazando la navegación/emisión por CUPS que se dejó caer en CUPS 1.6.x
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop cups-browsed.service
+```
+```
+systemctl disable cups-browsed.service
+```
+```
+systemctl mask cups-browsed.service
+```
+**9. cups.service**
+
+Servicio para la impresion, no será necesario.
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop cups.service
+```
+```
+systemctl disable cups.service
+```
+```
+systemctl mask cups.service
+```
+
+**10. e2scrub_reap.service**
+
+ El servicio se utiliza para realizar tareas de limpieza y mantenimiento en sistemas de archivos ext4, especialmente en lo que respecta a la corrección y prevención de errores en el sistema de archivos.
+
+**11. getty.service**
+
+Es un servicio fundamental en sistemas Unix y Linux que se encarga de la gestión de terminales virtuales y conexiones seriales, lo que permite a los usuarios iniciar sesión y trabajar en ellas
+
+**12. keyboard-setup.service**
+
+La función es asegurarse de que el teclado esté configurado correctamente según la configuración regional y de idioma del sistema
+
+**13. ModemManager.service**
+
+Demonio de gestión de módems de banda ancha móvil
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop ModemManager.service
+```
+```
+systemctl disable ModemManager.service
+```
+```
+systemctl mask ModemManager.service
+```
+
+**14. NetworkManager.service**
+El objetivo de NetworkManager es hacer que la configuración de la red sea lo más sencilla y automática posible. Si usa DHCP, NetworkManager está destinado a reemplazar las rutas predeterminadas, obtener direcciones IP de un servidor DHCP y cambiar los servidores de nombres cuando lo considere oportuno. De hecho, el objetivo de NetworkManager es hacer que la creación de redes simplemente funcione.
+Intenta mantener una conexión de red activa disponible en todo momento. No es necesario porque tenemos la confiruación realizada en /etc/network/interfaces 
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop NetworkManager.service
+```
+```
+systemctl disable NetworkManager.service
+```
+```
+systemctl mask NetworkManager.service
+```
+
+**15. open-vm-tools.service**
+
+ Es parte de Open VMware Tools, que es una suite de utilidades diseñada para mejorar la integración y el rendimiento de máquinas virtuales en entornos VMware
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop open-vm-tools.service
+```
+```
+systemctl disable open-vm-tools.service
+```
+```
+systemctl mask open-vm-tools.service
+```
+**16. pppd-dns.service**
+
+PPP es un protocolo de comunicación ampliamente utilizado para establecer conexiones de red a través de líneas telefónicas, módems, conexiones DSL y otros medios
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop pppd-dns.service
+```
+```
+systemctl disable pppd-dns.service
+```
+```
+systemctl mask pppd-dns.service
+```
+**17. switcheroo-control.service**
+Para los sistemas que tienen una GPU integrada y una GPU dedicada, este paquete forzará de forma predeterminada el uso de la GPU integrada para ahorrar energía.
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop switcheroo-control.service
+```
+```
+systemctl disable switcheroo-control.service
+```
+```
+systemctl mask switcheroo-control.service
+```
+
+**17. systemd-pstore.service**
+
+Los registros de volcado persistente, a menudo denominados "pstore" o "pstore logs," son registros de eventos y errores que se almacenan en una ubicación persistente incluso a través de reinicios del sistema. Esta funcionalidad es útil para el diagnóstico de problemas y la recuperación de datos de errores en sistemas Linux.
+
+**18. systemd-timesyncd.service**
+
+Se encarga de la sincronización del reloj del sistema con servidores de tiempo en Internet. Es una parte importante de la infraestructura de tiempo en sistemas que utilizan systemd como sistema de inicio.
+
+**19. udisks2.service**
+
+El demonio udisks sirve como interfaz para los dispositivos de bloque del sistema, implementados a través de D-Bus. Maneja operaciones como consultar, montar, desmontar, formatear o extraer dispositivos de almacenamiento como discos duros o unidades USB.
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop udisks2.service
+```
+```
+systemctl disable udisks2.service
+```
+```
+systemctl mask udisks2.service
+```
+
+**20. unattended-upgrades.service**
+
+Su principal función es aplicar automáticamente las actualizaciones de seguridad disponibles en el sistema operativo, lo que contribuye a mantener el sistema protegido contra vulnerabilidades conocidas.
+
+**21. wpa_supplicant.service**
+
+ Es un servicio en sistemas Linux que se utiliza para administrar conexiones inalámbricas y autenticación en redes Wi-Fi
+
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop wpa_supplicant.service
+```
+```
+systemctl disable wpa_supplicant.service
+```
+```
+systemctl mask wpa_supplicant.service
+```
+**22. vgauth.service**
+
+Tambien relacionado con VmWare
+Para eliminarlo ya que no lo necesitamos ejecutamos:
+```
+systemctl stop vgauth.service
+```
+```
+systemctl disable vgauth.service
+```
+```
+systemctl mask vgauth.service
+```
+
+
+
+
 ## i) Diseñe y configure un pequeño “script” y defina la correspondiente unidad de tipo service para que se ejecute en el proceso de botado de su máquina.
 ## j) Identifique las conexiones de red abiertas a y desde su equipo.
 ## k) Nuestro sistema es el encargado de gestionar la CPU, memoria, red, etc., como soporte a los datos y procesos. Monitorice en “tiempo real” la información relevante de los procesos del sistema y los recursos consumidos. Monitorice en “tiempo real” las conexiones de su sistema.
