@@ -556,6 +556,19 @@ systemctl disable vgauth.service
 systemctl mask vgauth.service
 ```
 
+**23. systemd-udevd.service**
+
+Este servicio es esencial para la detección y gestión de dispositivos hardware en el sistema.
+
+**24. systemd-udev-trigger.service**
+Este servicio es parte del sistema de detección y administración de hardware.
+
+
+
+
+
+
+
 
 
 
