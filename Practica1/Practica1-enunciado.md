@@ -10,7 +10,7 @@ nsswitch.conf, sources.list, etc.)
 
 La configuración de la máquina virtual dependerá de las IPs que sean proporcionadas por el profesor para nosotros y para nuestro compañero. Para configurar la mñaquina tenemos que editar el fichero `/etc/network/interfaces:`
 
-El siguiente ejemplo se correspone con las IPs 10.11.48.25 y 10.11.50.25
+El siguiente ejemplo se correspone con las IPs 10.11.48.207 y 10.11.50.207
 ```
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
@@ -20,14 +20,14 @@ auto lo ens33 ens34
 iface lo inet loopback
 
 iface ens33 inet static
-	address 10.11.48.25
+	address 10.11.48.207
 	netmask 255.255.254.0
 	broadcast 10.11.49.255
 	network 10.11.48.0
 	gateway 10.11.48.1
 
 iface ens34 inet static
-	address 10.11.50.25
+	address 10.11.50.207
 	netmask 255.255.254.0
 	broadcast 10.11.51.255
 	network 10.11.50.0
