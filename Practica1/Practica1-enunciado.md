@@ -585,6 +585,141 @@ Este servicio es parte del sistema de detección y administración de hardware.
 
 ## a) En colaboración con otro alumno de prácticas, configure un servidor y un cliente NTP.
 ## b) Cruzando los dos equipos anteriores, configure con rsyslog un servidor y un cliente de logs.
+
+**Servidor RSYSLOG ( IP --> 10.11.48.207) :**
+
+Primero instalamos rsyslog en nuestro sistema (seguramente ya lo tengamos)
+```
+apt install rsyslog
+```
+A continuación iremos al archivo de configuración del rsyslog:
+```
+pico /etc/rsyslog.conf
+```
+El archivo quedará configurado de la siguiente forma: 
+```
+
+#################
+#### MODULES ####
+#################
+
+module(load="imuxsock") # provides support for local system logging
+module(load="imklog")   # provides kernel logging support
+#module(load="immark")  # provides --MARK-- message capability
+
+# provides UDP syslog reception
+#module(load="imudp")
+#input(type="imudp" port="514")
+
+# provides TCP syslog reception
+module(load="imtcp")
+input(type="imtcp" port="514")
+
+
+###########################
+#### GLOBAL DIRECTIVES ####
+###########################
+
+#
+# Set the default permissions for all log files.
+#
+$FileOwner root
+$FileGroup adm
+$FileCreateMode 0640
+$DirCreateMode 0755
+$Umask 0022
+
+#
+# Where to place spool and state files
+#
+$WorkDirectory /var/spool/rsyslog
+
+#
+# Include all config files in /etc/rsyslog.d/
+#
+$IncludeConfig /etc/rsyslog.d/*.conf
+
+
+# Servidor solo aceptara mensajes del compañero (IP 10.11.48.203)
+
+$AllowedSender TCP,127.0.0.1, 10.11.48.203
+# Template para guardar los registros de log
+
+#$template remote, "/var/log/rsyslog-server/%fromhost-ip%/%programname%.log"
+#*.* ?remote
+#& stop
+
+# Los registros recibidos se almacenaran en /var/log/remote
+$template remote, "/var/log/remote/%HOSTNAME%/%PROGRAMNAME%.log"
+*.* ?remote
+& stop
+
+```
+**Servidor RSYSLOG ( IP --> 10.11.48.203) :**
+
+Añadir en el archivo de configuración lo siguiente:
+
+```
+*.* action(
+       type="omfwd"
+       target="10.11.48.207"
+       port="514"
+       protocol="tcp"
+       action.resumeRetryCount="-1"
+       queue.type="linkedlist"
+       queue.filename="/var/log/rsyslog-queue"
+       queue.saveOnShutdown="on"
+)
+
+```
+Despues de configurar ambas maquina para que los cambios sean efectivos reiniciamos el servicio:
+```
+systemctl restart rsyslog.service
+```
+Si queremos ver el estado actual del servicio:
+```
+systemctl status rsyslog.service
+```
+A continuación para probar que funciona correctamente:
+- Cliente:
+Lanzamos lo siguiente desde la cmd:
+```
+logger "ESTO ES UNA PRUEBA"
+```
+
+- Servidor:
+Si desde el cliente ha ejecutado lo anterior desde el usuario root (el log se guardara en root.log)
+```
+cat /var/log/rsyslog-server/10.11.48.203/root.log
+
+```
+Si lo ejecuto desde el usuario LSI solo habria que cambiar root.log por lsi.log
+
+En este punto vemos que funciona correctamente, a cotinuacion vamos a probar la cola:
+
+1. Primero "comentamos" para que deje de escuchar:
+```
+pico /etc/rsyslog.conf
+```
+Comentamos la linea y luego reiciamos el servicio
+```
+# provides TCP syslog reception
+module(load="imtcp")
+# input(type="imtcp" port="514")
+```
+2. A continuación desde el cliente enviamos un log como el de antes :
+3. Ejecutamos el siguiente comando para ver que los log no estan llegando:
+
+```
+tail /var/log/rsyslog-server/10.11.48.203/root.log
+```
+4. Volvemos a poner al servidor escuchando ( descomentamos la línea) y volvemos a lanzar desde el cliente un logger
+5. Tras unos segundos ejecutamos el siguiente comando para ver que los mensajes de han procesado y almacenado correctamente:
+```
+tail /var/log/rsyslog-server/10.11.48.203/root.log
+```
+
+
 ## c) Haga todo tipo de propuestas sobre los siguientes aspectos.: ¿Qué problemas de seguridad identifica en los dos apartados anteriores?. ¿Cómo podría solucionar los problemas identificados?
 ## d) En la plataforma de virtualización corren, entre otros equipos, más de 200 máquinas virtuales para LSI. Como los recursos son limitados, y el disco duro también, identifique todas aquellas acciones que pueda hacer para reducir el espacio de disco ocupado.
 
