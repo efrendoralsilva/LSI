@@ -579,11 +579,110 @@ Este servicio es parte del sistema de detección y administración de hardware.
 ## m) Existen múltiples paquetes para la gestión de logs (syslog, syslog-ng, rsyslog). Utilizando el rsyslog pruebe su sistema de log local.
 ## n) Configure IPv6 6to4 y pruebe ping6 y ssh sobre dicho protocolo. ¿Qué hace su tcp-wrapper en las conexiones ssh en IPv6? Modifique su tcp-wapper siguiendo el criterio del apartado h). ¿Necesita IPv6?. ¿Cómo se deshabilita IPv6 en su equipo?
 
-
-
 # PARTE 2
 
 ## a) En colaboración con otro alumno de prácticas, configure un servidor y un cliente NTP.
+
+
+> Demostración con `10.11.48.203` como servidor y `10.11.48.207` como cliente.
+
+1. Servidor: El fichero `/etc/ntp.conf` debería quedar así:
+
+```bash
+# /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
+
+driftfile /var/lib/ntp/ntp.drift
+
+# Leap seconds definition provided by tzdata
+leapfile /usr/share/zoneinfo/leap-seconds.list
+
+# Enable this if you want statistics to be logged.
+#statsdir /var/log/ntpstats/
+
+statistics loopstats peerstats clockstats
+filegen loopstats file loopstats type day enable
+filegen peerstats file peerstats type day enable
+filegen clockstats file clockstats type day enable
+
+# Configuración servidor
+server 127.127.1.0 minpoll 4
+fudge 127.127.1.0 stratum 0
+
+# You do need to talk to an NTP server or two (or three).
+
+# pool.ntp.org maps to about 1000 low-stratum NTP servers.  Your server will
+# pick a different set every time it starts up.  Please consider joining the
+# pool: <http://www.pool.ntp.org/join.html>
+#pool 0.debian.pool.ntp.org iburst
+#pool 1.debian.pool.ntp.org iburst
+#pool 2.debian.pool.ntp.org iburst
+#pool 3.debian.pool.ntp.org iburst
+```
+
+```bash
+# By default, exchange time with everybody, but don't allow configuration.
+#restrict -4 default kod notrap nomodify nopeer noquery limited
+#restrict -6 default kod notrap nomodify nopeer noquery limited
+restrict default ignore
+restrict 10.11.48.207 nomodify nopeer notrap
+
+# Local users may interrogate the ntp server more closely.
+restrict 127.0.0.1
+restrict ::1
+```
+
+2. Cliente: Dejamos el fichero `/etc/ntp.conf` así:
+
+```bash
+# /etc/ntp.conf, configuration for ntpd; see ntp.conf(5) for help
+
+driftfile /var/lib/ntp/ntp.drift
+
+# Leap seconds definition provided by tzdata
+leapfile /usr/share/zoneinfo/leap-seconds.list
+
+# Enable this if you want statistics to be logged.
+#statsdir /var/log/ntpstats/
+
+statistics loopstats peerstats clockstats
+filegen loopstats file loopstats type day enable
+filegen peerstats file peerstats type day enable
+filegen clockstats file clockstats type day enable
+
+### Configuración cliente
+server 10.11.48.203 minpoll 4
+fudge 127.127.1.0 stratum 1
+```
+
+```bash
+# By default, exchange time with everybody, but don't allow configuration.
+#restrict -4 default kod notrap nomodify nopeer noquery limited
+#restrict -6 default kod notrap nomodify nopeer noquery limited
+#restrict default ignore
+#restrict 10.11.48.203 nomodify notrap nopeer
+
+# Local users may interrogate the ntp server more closely.
+restrict 127.0.0.1
+restrict ::1
+
+# Needed for adding pool entries
+restrict source notrap nomodify noquery
+```
+
+3. Actualizar cambios en `ntp.conf`: `systemctl restart ntp`.
+
+4. Comprobamos:
+
+```console
+root@debian:~# date +%T -s 1
+01:00:00
+root@debian:~# ntpdate 10.11.49.203
+```
+
+> Lo que hice aquí fue poner el reloj local del cliente a las `01:00:00` y hacer `ntpdate` a la IP del servidor NTP para sincronizar la hora.
+
+
+
 ## b) Cruzando los dos equipos anteriores, configure con rsyslog un servidor y un cliente de logs.
 
 **Servidor RSYSLOG ( IP --> 10.11.48.207) :**
