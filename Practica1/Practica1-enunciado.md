@@ -326,6 +326,11 @@ sudo systemctl restart systemd-networkd
 Esto hará que la ruta estática se active y persista incluso después de reiniciar el sistema.
 Recuerda que las rutas estáticas son útiles para dirigir el tráfico hacia redes específicas a través de puertas de enlace definidas manualmente cuando no se utiliza un enrutamiento dinámico. Asegúrate de ajustar las direcciones IP y las máscaras de red según tus necesidades específicas.
 
+Si queremos eliminar una ruta el comando que utilizaremos será: 
+```
+ip route del 10.11.52.0/24 via 10.11.48.1
+
+```
 
 ## h) En el apartado d) se ha familiarizado con los services que corren en su sistema. ¿Son necesarios todos ellos?. Si identifica servicios no necesarios, proceda adecuadamente. Una limpieza no le vendrá mal a su equipo, tanto desde el punto de vista de la seguridad, como del rendimiento.
 
