@@ -592,6 +592,25 @@ systemctl enable last-login.service
 
 
 ## j) Identifique las conexiones de red abiertas a y desde su equipo.
+
+El comando netstat -naut muestra una lista de todas las conexiones activas en un sistema, tanto conexiones TCP como UDP, con las direcciones IP y puertos en formato numérico. Aquí tienes una descripción más detallada de lo que muestra cada opción:
+
+-n: Indica que las direcciones IP y puertos se mostrarán en formato numérico, en lugar de resolverlos a nombres de hosts y servicios. Esto es útil para obtener información más detallada y evitar retrasos en la resolución DNS.
+
+-a: Muestra todas las conexiones, incluidas las conexiones establecidas y las que están esperando ser establecidas o cerradas.
+
+-u: Muestra las conexiones UDP, que son conexiones no orientadas a la conexión que se utilizan para la transmisión de datos sin garantía de entrega ni orden.
+
+-t: Muestra las conexiones TCP, que son conexiones orientadas a la conexión y confiables utilizadas para la transmisión de datos con garantía de entrega y orden.
+
+```
+netstat -naut
+```
+
+
+En resumen, el comando netstat -naut mostrará una lista de todas las conexiones activas en el sistema, incluidas las conexiones TCP y UDP, con direcciones IP y puertos en formato numérico. Esto es útil para diagnosticar y comprender las conexiones de red en un sistema.
+
+
 ## k) Nuestro sistema es el encargado de gestionar la CPU, memoria, red, etc., como soporte a los datos y procesos. Monitorice en “tiempo real” la información relevante de los procesos del sistema y los recursos consumidos. Monitorice en “tiempo real” las conexiones de su sistema.
 ## l) Un primer nivel de filtrado de servicios los constituyen los tcp-wrappers. Configure el tcpwrapper de su sistema (basado en los ficheros hosts.allow y hosts.deny) para permitir conexiones SSH a un determinado conjunto de IPs y denegar al resto. ¿Qué política general de filtrado ha aplicado?. ¿Es lo mismo el tcp-wrapper que un firewall?. Procure en este proceso no perder conectividad con su máquina. No se olvide que trabaja contra ella en remoto por ssh.
 ## m) Existen múltiples paquetes para la gestión de logs (syslog, syslog-ng, rsyslog). Utilizando el rsyslog pruebe su sistema de log local.
