@@ -606,7 +606,22 @@ El comando netstat -naut muestra una lista de todas las conexiones activas en un
 ```
 netstat -naut
 ```
+La info que muestra el comando:
+Cuando ejecutas el comando netstat -naut, verás una lista de conexiones de red activas en tu sistema, y cada columna muestra información específica sobre estas conexiones. Aquí tienes una descripción de las columnas comunes que aparecen en la salida de netstat:
 
+Proto: Esta columna indica el protocolo utilizado para la conexión. Puede mostrar "tcp" para conexiones TCP o "udp" para conexiones UDP.
+
+**Recv-Q**: Esta columna muestra la cantidad de datos que se han recibido y que están en la cola de espera para ser procesados. Esta columna se aplica principalmente a conexiones TCP.
+
+**Send-Q**: Muestra la cantidad de datos que se han enviado y están en la cola de espera para ser entregados. Al igual que Recv-Q, esta columna se aplica principalmente a conexiones TCP.
+
+**Local Address**: Esta columna muestra la dirección IP y el puerto en el que el servicio local está escuchando. Por ejemplo, 192.168.1.2:80 significa que el servicio local está escuchando en la dirección IP 192.168.1.2 y en el puerto 80.
+
+**Foreign Address**: Muestra la dirección IP y el puerto remoto al que está conectado el servicio local. Por ejemplo, 203.0.113.4:443 indica una conexión con la dirección IP 203.0.113.4 en el puerto 443.
+
+**State**: Esta columna muestra el estado de la conexión TCP. Los estados comunes incluyen ESTABLISHED (conexión establecida), LISTEN (escuchando conexiones entrantes), TIME_WAIT (esperando a cerrar la conexión), entre otros.
+
+**PID/Program name**: Esta columna muestra el identificador del proceso (PID) y, en algunos casos, el nombre del programa o servicio asociado con la conexión. Esto puede ser útil para identificar qué proceso está utilizando una conexión específica.
 
 En resumen, el comando netstat -naut mostrará una lista de todas las conexiones activas en el sistema, incluidas las conexiones TCP y UDP, con direcciones IP y puertos en formato numérico. Esto es útil para diagnosticar y comprender las conexiones de red en un sistema.
 
