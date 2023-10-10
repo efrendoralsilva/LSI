@@ -873,6 +873,13 @@ $template remote, "/var/log/remote/%HOSTNAME%/%PROGRAMNAME%.log"
 & stop
 
 ```
+
+***.* ?remote** 
+Todos los mensajes recibidos se alamacenan en los archivos de la plantilla, la ? indica que el procesamiento sigue despues de esta acción.
+**& stop**
+El procesamiento se detiene despues de aplicar la regla anterior.
+
+
 **Servidor RSYSLOG ( IP --> 10.11.48.203) :**
 
 Añadir en el archivo de configuración lo siguiente:
