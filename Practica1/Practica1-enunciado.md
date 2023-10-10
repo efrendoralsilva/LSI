@@ -636,6 +636,15 @@ Esto mostrará bastante info, el PID l user del proceso, PR (prioridad del proce
 NI(Nice" puede variar en un rango de -20 a +19, donde -20 es la prioridad más alta (mayor importancia) y +19 es la prioridad más baja (menor importancia)), VIRT (memoria virtual utilizada en el proceso) , RES (memoria fisica utiliza en el proceso) ,
 SHR (memoria compartida utiliza por cada proceso), S (estado del proceso-> R(Running); S(Sleeping, en espera); D(Uninterruptible Sleep, generalmente esperando a que ocurra algo para continuar); Z(Zombie, terminado pero no eliminado al completo); T(Stopped);I(Inactivo);
 
+Mostrar conexiones del sistema:
+```
+netstat -c –continuous
+```
+Listar conexiones abiertas por procesos del sistema:
+```
+lsof -u root
+```
+Este comando mostrara bastane info: nombre del comando, PID, FD(descriptor de archivo asociado al recurso), user, type(UDP/TCP),size/off (tamaño) , NODE y NAME
 
 ## l) Un primer nivel de filtrado de servicios los constituyen los tcp-wrappers. Configure el tcpwrapper de su sistema (basado en los ficheros hosts.allow y hosts.deny) para permitir conexiones SSH a un determinado conjunto de IPs y denegar al resto. ¿Qué política general de filtrado ha aplicado?. ¿Es lo mismo el tcp-wrapper que un firewall?. Procure en este proceso no perder conectividad con su máquina. No se olvide que trabaja contra ella en remoto por ssh.
 ## m) Existen múltiples paquetes para la gestión de logs (syslog, syslog-ng, rsyslog). Utilizando el rsyslog pruebe su sistema de log local.
