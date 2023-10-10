@@ -627,6 +627,16 @@ En resumen, el comando netstat -naut mostrará una lista de todas las conexiones
 
 
 ## k) Nuestro sistema es el encargado de gestionar la CPU, memoria, red, etc., como soporte a los datos y procesos. Monitorice en “tiempo real” la información relevante de los procesos del sistema y los recursos consumidos. Monitorice en “tiempo real” las conexiones de su sistema.
+
+Mostrar procesos del sistem y rescursos consumidos
+```
+top
+```
+Esto mostrará bastante info, el PID l user del proceso, PR (prioridad del proceso donde mas bajo es mayor prioridad), 
+NI(Nice" puede variar en un rango de -20 a +19, donde -20 es la prioridad más alta (mayor importancia) y +19 es la prioridad más baja (menor importancia)), VIRT (memoria virtual utilizada en el proceso) , RES (memoria fisica utiliza en el proceso) ,
+SHR (memoria compartida utiliza por cada proceso), S (estado del proceso-> R(Running); S(Sleeping, en espera); D(Uninterruptible Sleep, generalmente esperando a que ocurra algo para continuar); Z(Zombie, terminado pero no eliminado al completo); T(Stopped);I(Inactivo);
+
+
 ## l) Un primer nivel de filtrado de servicios los constituyen los tcp-wrappers. Configure el tcpwrapper de su sistema (basado en los ficheros hosts.allow y hosts.deny) para permitir conexiones SSH a un determinado conjunto de IPs y denegar al resto. ¿Qué política general de filtrado ha aplicado?. ¿Es lo mismo el tcp-wrapper que un firewall?. Procure en este proceso no perder conectividad con su máquina. No se olvide que trabaja contra ella en remoto por ssh.
 ## m) Existen múltiples paquetes para la gestión de logs (syslog, syslog-ng, rsyslog). Utilizando el rsyslog pruebe su sistema de log local.
 ## n) Configure IPv6 6to4 y pruebe ping6 y ssh sobre dicho protocolo. ¿Qué hace su tcp-wrapper en las conexiones ssh en IPv6? Modifique su tcp-wapper siguiendo el criterio del apartado h). ¿Necesita IPv6?. ¿Cómo se deshabilita IPv6 en su equipo?
