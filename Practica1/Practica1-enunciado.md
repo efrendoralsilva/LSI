@@ -647,6 +647,43 @@ lsof -i
 Este comando mostrara bastane info: nombre del comando, PID, FD(descriptor de archivo asociado al recurso), user, type(UDP/TCP),size/off (tamaño) , NODE y NAME
 
 ## l) Un primer nivel de filtrado de servicios los constituyen los tcp-wrappers. Configure el tcpwrapper de su sistema (basado en los ficheros hosts.allow y hosts.deny) para permitir conexiones SSH a un determinado conjunto de IPs y denegar al resto. ¿Qué política general de filtrado ha aplicado?. ¿Es lo mismo el tcp-wrapper que un firewall?. Procure en este proceso no perder conectividad con su máquina. No se olvide que trabaja contra ella en remoto por ssh.
+
+Las políticas o reglas para filtrar el acceso al servidor desde la red se definen de la siguiente
+forma:
+Demonios o lista de demonios del sistema : Lista de equipos : Acción a realizar
+A continuación detallamos cada campo:
+– Demonios:
+Son servicios que existen en sistemas operativos Unix como por ejemplo sshd (servicio SSH),
+slapd (servicio LDAP) o proftpd (servicio FTP). Para crear una regla común para varios demonios
+debemos indicar sunombre separados por comas. Existe también el comodín “ALL” que hace
+que dicha política afecte a todos los demonios del sistema.
+– Lista de equipos:
+En este campo indicamos a que equipos aplicamos esta política. Podemos indicar una dirección
+IP, un rango de direccionesIP, o un nombre de dominio. También podremos usar el comodín “ALL”
+para que esta política afecte a todos los equipos que intenten acceder. También existe el
+operador “EXCEPT” que nos permite eliminar de la regla uno o varios equipos.
+– Acción a realizar:
+Aquí debemos indicar si la política permite el acceso o deniega elacceso a los demonios
+indicados anteriormente. Las palabras que se usa denegar el acceso es “deny”. En caso de
+dejar este campo vacío, significa que permitimos el acceso a los demonios y equipos indicados.
+Opcionalmente, podemos enviar comandos con la directiva “spawn”. Esta directiva suele ser
+utilizada para la creación de registros de conexión al propio equipo.
+Para configurar el hosts.allow, hosts.deny empezaremos permitiendo las conexiones que nos
+interesen en hosts.allow y denegaremos el resto en hosts.deny
+
+Los ficheros de configuración están situados en /etc/hosts.allow, /etc/hosts.deny.
+
+```
+cat /etc/hosts.allow
+```
+```
+cat /etc/hosts.deny
+```
+
+
+
+
+
 ## m) Existen múltiples paquetes para la gestión de logs (syslog, syslog-ng, rsyslog). Utilizando el rsyslog pruebe su sistema de log local.
 ## n) Configure IPv6 6to4 y pruebe ping6 y ssh sobre dicho protocolo. ¿Qué hace su tcp-wrapper en las conexiones ssh en IPv6? Modifique su tcp-wapper siguiendo el criterio del apartado h). ¿Necesita IPv6?. ¿Cómo se deshabilita IPv6 en su equipo?
 
