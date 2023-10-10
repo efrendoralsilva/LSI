@@ -570,6 +570,12 @@ Este servicio es parte del sistema de detección y administración de hardware.
 
 ## i) Diseñe y configure un pequeño “script” y defina la correspondiente unidad de tipo service para que se ejecute en el proceso de botado de su máquina.
 
+Ver servicio creado:
+```
+nano /etc/systemd/system/last-login.service
+```
+
+
 
 
 ## j) Identifique las conexiones de red abiertas a y desde su equipo.
