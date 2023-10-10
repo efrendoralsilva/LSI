@@ -642,7 +642,7 @@ netstat -c –continuous
 ```
 Listar conexiones abiertas por procesos del sistema:
 ```
-lsof -u root
+lsof -i
 ```
 Este comando mostrara bastane info: nombre del comando, PID, FD(descriptor de archivo asociado al recurso), user, type(UDP/TCP),size/off (tamaño) , NODE y NAME
 
