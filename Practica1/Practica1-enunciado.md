@@ -570,11 +570,24 @@ Este servicio es parte del sistema de detección y administración de hardware.
 
 ## i) Diseñe y configure un pequeño “script” y defina la correspondiente unidad de tipo service para que se ejecute en el proceso de botado de su máquina.
 
+El script que creamos meterá en un archivo de txt en la ruta /home/lsi/lastLogin.txt la ultima vez que nos logueamos en la máquina.
+
 Ver servicio creado:
 ```
 nano /etc/systemd/system/last-login.service
 ```
-
+Para ver el script:
+```
+nano /usr/local/bin/last-login.sh
+```
+Para darle los permisos necesarios:
+```
+chmod ugo+rwx /usr/local/bin/last-login.sh
+```
+Y por último activamos el servicio:
+```
+systemctl enable last-login.service
+```
 
 
 
