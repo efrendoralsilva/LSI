@@ -652,20 +652,31 @@ Las políticas o reglas para filtrar el acceso al servidor desde la red se defin
 forma:
 Demonios o lista de demonios del sistema : Lista de equipos : Acción a realizar
 A continuación detallamos cada campo:
-– Demonios:
+
+**Demonios**
+
 Son servicios que existen en sistemas operativos Unix como por ejemplo sshd (servicio SSH),
 slapd (servicio LDAP) o proftpd (servicio FTP). Para crear una regla común para varios demonios
 debemos indicar sunombre separados por comas. Existe también el comodín “ALL” que hace
 que dicha política afecte a todos los demonios del sistema.
-– Lista de equipos:
+
+**Lista de equipos**
+
+
 En este campo indicamos a que equipos aplicamos esta política. Podemos indicar una dirección
 IP, un rango de direccionesIP, o un nombre de dominio. También podremos usar el comodín “ALL”
 para que esta política afecte a todos los equipos que intenten acceder. También existe el
 operador “EXCEPT” que nos permite eliminar de la regla uno o varios equipos.
-– Acción a realizar:
+
+**Acción a realizar**
+
 Aquí debemos indicar si la política permite el acceso o deniega elacceso a los demonios
 indicados anteriormente. Las palabras que se usa denegar el acceso es “deny”. En caso de
 dejar este campo vacío, significa que permitimos el acceso a los demonios y equipos indicados.
+
+**Spawn**
+
+
 Opcionalmente, podemos enviar comandos con la directiva “spawn”. Esta directiva suele ser
 utilizada para la creación de registros de conexión al propio equipo.
 Para configurar el hosts.allow, hosts.deny empezaremos permitiendo las conexiones que nos
