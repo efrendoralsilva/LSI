@@ -224,6 +224,67 @@ Vemos las ultimas líneas del registro de arpon, para comprobar que funciona, qu
 tail /var/log/arpon/arpon.log
 ```
 
+***j) Pruebe distintas técnicas de host discovey, port scanning y OS fingerprinting sobre las máquinas del laboratorio de prácticas en IPv4. Realice alguna de las pruebas de port scanning sobre IPv6. ¿Coinciden los servicios prestados por un sistema con los de IPv4?.***
+
+- **IPv4:**
+
+Host discovery:
+
+```
+nmap -sL 10.11.48.0/24
+```
+Port scanning:
+
+```
+nmap -sS 10.11.48.0/24
+```
+OS fingerprinting
+
+```
+nmap -O 10.11.48.203
+```
+
+- **IPv6:**
+
+Host discovery:
+
+```
+nmap -6 -sL 2002:a0b:30cf::1
+
+```
+
+
+***k) Obtenga información “en tiempo real” sobre las conexiones de su máquina, así como del ancho de banda consumido en cada una de ellas.***
+
+Iftop: Escucha las conexiones en una determinada interfaz y muestra el ancho de banda utilizado por dichas conexiones
+
+```
+iftop -i ens33
+```
+- Primera columna: ip origen
+- Segunda columna: direccion de tráfico =>(subida) <=(bajada)
+- Tercera columna: ip destino
+- Últimas tres columnas: ancho de banda en los últimos 2, 10 y 40 segundos
+
+
+Para ver ancho de banda en tiempo real:
+```
+vnstat -l -i ens33
+```
+Si queremos mostrarlo por horas_
+
+```
+vnstat -h
+```
+
+
+
+
+
+
+
+
+
 
 
 
