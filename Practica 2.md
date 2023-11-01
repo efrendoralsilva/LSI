@@ -88,6 +88,56 @@ Statistics -> Endpoints
 
 ***c) Obtenga la relación de las direcciones MAC de los equipos de su segmento.***
 
+Se puede hacer con nMap o con Nast.
+```
+sudo apt-get install nast
+```
+```
+sudo apt-get install nmap
+```
+- Con Nmap:
+```
+nmap -sP 10.11.48.0/23
+```
+- Con nast:
+```
+nast -m
+```
+***d) Obtenga la relación de las direcciones IPv6 de su segmento***
+
+- Con ping6:
+
+Envía paquetes icmpv6 a todos los nodos del enlace local (dir multicast ff02::1). Con -c 2 hacemos que se envíen sólo dos paquetesECHO_REQUEST a cada nodo. -I interfaz.
+```
+ping6 -c2 -I ens33 ff02::1
+```
+Muestra la Neighbor Table de ipv6 (en ipv6 no existe ARP, existe Neighbor Discovery Protocol (NDP), equivalente a ARP). Ejecutar esto después de hacer el ping6.
+```
+ip -6 neigh
+```
+- Con thc-ipv6
+```
+apt-get install thc-ipv6
+```
+Mostrar direcciones vivas en segmento:
+```
+atk6-alive6 ens33
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
