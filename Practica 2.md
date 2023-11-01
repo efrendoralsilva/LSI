@@ -1,7 +1,7 @@
 # Práctica 2: Categorías de ataques
 
 
-**a) Instale el ettercap y pruebe sus opciones básicas en línea de comando**
+***a) Instale el ettercap y pruebe sus opciones básicas en línea de comando***
 
 ```
 sudo apt-get install ettercap-text-only
@@ -29,7 +29,32 @@ paquetes
 contraseñas y host en el fichero especificado por ‘logfile’
 - **w:** para guardar el pcapfile
 
-**b) Capture paquetería variada de su compañero de prácticas que incluya varias sesiones HTTP. Sobre esta paquetería (puede utilizar el wireshark para los siguientes subapartados)**
+***b) Capture paquetería variada de su compañero de prácticas que incluya varias sesiones HTTP. Sobre esta paquetería (puede utilizar el wireshark para los siguientes subapartados)***
+
+1. Hacemos un MITM a la máquina de nuestro compañero:
+
+```
+ettercap -T -q -i ens33 -M arp:remote //Ip Alex/ //10.11.48.1/
+```
+
+2. En otra terminal, hacemos un tcpdump para guardar el tráfico capturado en un fichero `compa.pcap`:
+
+```
+tcpdump -i ens33 -s 65535 -w compa.pcap
+
+```
+
+3. Desde nuestra máquina local, hacemos un `scp` para obtener el fichero `compa.pcap`:
+
+```
+scp lsi@10.11.48.50:/home/lsi/compa.pcap .
+```
+
+4. Ejecutamos Wireshark y abrimos el archivo compa.pcap para comenzar a analizar.
+
+
+
+
 
 - **Identifique los campos de cabecera de un paquete TCP:**
 
@@ -59,6 +84,9 @@ Statistics -> Conversations
 
 Statistics -> Endpoints 
 
+
+
+***c) Obtenga la relación de las direcciones MAC de los equipos de su segmento.***
 
 
 
