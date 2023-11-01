@@ -174,7 +174,55 @@ El archivo generado lo abrimos en wireshark
 
 En el archivo hay que localizar la MAC de la víctima.
 
+***i) Pruebe alguna herramienta y técnica de detección del sniffing (preferiblemente arpon).***
+ 
+ Para instlar arpon:
+ 
+ ```
+sudo apt-get install arpon
+```
+Para configurar arpon, abrimos el archivo de configuración y añadimos las IP y mac propia, la del compañero y la de router.
 
+```
+pico /etc/arpon.conf
+```
+Para obtener las MACs:
+
+```
+arp -a
+```
+Para probarlo, mientras uno realiza un ataque, el otro:
+
+Activamos arpon en ens33:
+
+```
+systemctl start arpon@ens33
+```
+Paramos arpon en ens33
+```
+systemctl stop arpon@ens33
+```
+Para ver las tablas arp:
+
+```
+arp -a
+```
+Comprobamos si el arpon esta desactivado, si lo esta tiene que aparecer la MAC del compañero en lugar de la Mac del router:
+
+```
+arp -a | grep 10.11.48.1
+```
+
+Para limpiar Arp
+
+```
+ip -s -s neigh flush all
+```
+Vemos las ultimas líneas del registro de arpon, para comprobar que funciona, quien ha hecho el ataque debe haer un arp-a y ver que la Mac de la víctima no ha cambiado.
+
+```
+tail /var/log/arpon/arpon.log
+```
 
 
 
