@@ -28,3 +28,38 @@ paquetes
 - **L <logfile>** Guarda en formato binario todos los paquetes, así como información sobre
 contraseñas y host en el fichero especificado por ‘logfile’
 - **w:** para guardar el pcapfile
+
+**b) Capture paquetería variada de su compañero de prácticas que incluya varias sesiones HTTP. Sobre esta paquetería (puede utilizar el wireshark para los siguientes subapartados)**
+
+- **Identifique los campos de cabecera de un paquete TCP:**
+
+(doble click en paquete)
+
+- **Filtre la captura para obtener el tráfico HTTP**
+  
+Donde pone buscar por filtro
+
+- **Obtenga los distintos “objetos” del tráfico HTTP (imágenes, pdfs, etc.)**
+  
+archivo -> exportar objetos -> http
+
+- **Visualice la paquetería TCP de una determinada sesión.**
+  
+Poner en la barra de filtros tcp y darle a la flecha.
+
+- **Sobre el total de la paquetería obtenga estadísticas del tráfico por protocolo como fuente de información para un análisis básico del tráfico.**
+
+Statistics -> Protocol Hierarchy
+
+- **Obtenga información del tráfico de las distintas “conversaciones” mantenidas.**
+
+Statistics -> Conversations
+
+- **Obtenga direcciones finales del tráfico de los distintos protocolos como mecanismo para determinar qué circula por nuestras redes.**
+
+Statistics -> Endpoints 
+
+
+
+
+
