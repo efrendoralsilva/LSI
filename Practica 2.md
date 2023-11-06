@@ -510,6 +510,24 @@ nslookup 8.8.8.8
 
 ***q) Trate de sacar un perfil de los principales sistemas que conviven en su red de prácticas, puertos accesibles, fingerprinting, etc.***
 
+Perfil de los sistemas de nuestra red:
+
+host discovery:
+
+```
+nmap -sL 10.11.48.0/24
+```
+port scanning 
+
+```
+nmap -sS 10.11.48.0/24
+```
+
+OS fingerprinting
+```
+nmap -O 10.11.48.27
+```
+
 ***r) Realice algún ataque de “password guessing” contra su servidor ssh y compruebe que el analizador de logs reporta las correspondientes alarmas.***
 
 ***s) Reportar alarmas está muy bien, pero no estaría mejor un sistema activo, en lugar de uno pasivo. Configure algún sistema activo, por ejemplo OSSEC, y pruebe su funcionamiento ante un “password guessing”.***
