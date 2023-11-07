@@ -580,8 +580,13 @@ Iniciamos el OSSEC:
 
 ```
 
-Iniciamos ataque de password guessing desde la máquina del compañero:
+Instalamos medusa en el equipo para realizar el ataque password guessing:
 
+```
+sudo apt-get install medusa
+```
+
+Iniciamos ataque de password guessing desde la máquina del compañero:
 
 ```
 medusa -h 10.11.48.207 -u lsi -P 10k-most-common.txt -M ssh
