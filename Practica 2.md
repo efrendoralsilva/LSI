@@ -530,6 +530,93 @@ nmap -O 10.11.48.27
 
 ***r) Realice algún ataque de “password guessing” contra su servidor ssh y compruebe que el analizador de logs reporta las correspondientes alarmas.***
 
+Reportar alarmas está muy bien, pero no estaría mejor un sistema activo, en lugar de uno pasivo. Configure algún sistema activo, por ejemplo OSSEC, y pruebe su funcionamiento ante un “password guessing”.
+
+Instalar [OSSEC](https://www.ossec.net/docs/docs/manual/installation/installation-requirements.html):
+
+
+```
+
+apt -y install  wget git vim unzip make gcc build-essential php php-cli php-common libapache2-mod-php apache2-utils inotify-tools libpcre2-dev zlib1g-dev  libz-dev libssl-dev libevent-dev build-essential libsystemd-dev
+
+```
+
+```
+
+wget https://github.com/ossec/ossec-hids/archive/refs/tags/3.7.0.zip
+
+```
+
+```
+
+mv 3.7.0.zip  ossec-hids-3.7.0.zip
+
+```
+
+```
+
+unzip ossec-hids-3.7.0.zip
+
+```
+
+```
+
+cd ossec-hids-3.7.0
+
+```
+
+```
+
+./install.sh
+
+```
+
+
+Iniciamos el OSSEC:
+
+
+```
+/var/ossec/bin/ossec-control start
+
+```
+
+Iniciamos ataque de password guessing desde la máquina del compañero:
+
+
+```
+medusa -h 10.11.48.207 -u lsi -P 10k-most-common.txt -M ssh
+
+```
+
+Vemos que tras los primeros intentos, ya no permite más, ni tampoco conectar por ssh, así que lo desbaneamos:
+
+```
+
+/var/ossec/active-response/bin/host-deny.sh delete - 10.11.48.203
+
+```
+
+```
+
+/var/ossec/active-response/bin/firewall-drop.sh delete - 10.11.48.203
+
+```
+Para comprobar los logs:
+
+```
+
+tail /var/ossec/logs/ossec.log
+
+```
+
+```
+tail /var/ossec/logs/active-responses.log
+```
+
+
+
+
+
 ***s) Reportar alarmas está muy bien, pero no estaría mejor un sistema activo, en lugar de uno pasivo. Configure algún sistema activo, por ejemplo OSSEC, y pruebe su funcionamiento ante un “password guessing”.***
 
 ***t) Supongamos que una máquina ha sido comprometida y disponemos de un fichero con sus mensajes de log. Procese dicho fichero con OSSEC para tratar de localizar evidencias de lo acontecido (“post mortem”). Muestre las alertas detectadas con su grado de criticidad, así como un resumen de las mismas.***
