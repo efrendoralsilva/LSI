@@ -530,6 +530,19 @@ nmap -O 10.11.48.27
 
 ***r) Realice algún ataque de “password guessing” contra su servidor ssh y compruebe que el analizador de logs reporta las correspondientes alarmas.***
 
+Realizamos ataque con medusa le añadi la passwd correcta en la posicion10 del txt:
+
+```
+medusa -h 10.11.48.207 -u lsi -P 10k-most-common.txt -M ssh
+
+```
+
+Sin "proteccion" vemos que logra conectarse.
+
+
+
+***s) Reportar alarmas está muy bien, pero no estaría mejor un sistema activo, en lugar de uno pasivo. Configure algún sistema activo, por ejemplo OSSEC, y pruebe su funcionamiento ante un “password guessing”.***
+
 Reportar alarmas está muy bien, pero no estaría mejor un sistema activo, en lugar de uno pasivo. Configure algún sistema activo, por ejemplo OSSEC, y pruebe su funcionamiento ante un “password guessing”.
 
 Instalar [OSSEC](https://www.ossec.net/docs/docs/manual/installation/installation-requirements.html):
@@ -618,13 +631,6 @@ tail /var/ossec/logs/ossec.log
 tail /var/ossec/logs/active-responses.log
 ```
 
-
-
-
-
-***s) Reportar alarmas está muy bien, pero no estaría mejor un sistema activo, en lugar de uno pasivo. Configure algún sistema activo, por ejemplo OSSEC, y pruebe su funcionamiento ante un “password guessing”.***
-
-Supongamos que una máquina ha sido comprometida y disponemos de un fichero con sus mensajes de log. Procese dicho fichero con OSSEC para tratar de localizar evidencias de lo acontecido (“post mortem”). Muestre las alertas detectadas con su grado de criticidad, así como un resumen de las mismas.
 
 
 
