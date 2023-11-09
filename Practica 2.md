@@ -741,7 +741,7 @@ Include /etc/apache2/modsec/coreruleset-3.3.4/rules/*.conf
 
 y comentaremos la siguiente:
 
-# IncludeOptional /usr/share/modsecurity-crs/*.load
+IncludeOptional /usr/share/modsecurity-crs/*.load
 
 De esta forma el ModSecurity utilizará las reglas que le hemos dicho en el archivo de configuración que seran las reglas de OWASP que hemos añadido y la configuración que hemos configurado en el archivo /etc/modseccurity/modsecurity.conf
 
