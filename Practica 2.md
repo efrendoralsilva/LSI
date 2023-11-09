@@ -655,7 +655,7 @@ cat /var/log/auth.log | /var/ossec/bin/ossec-logtest -a |/var/ossec/bin/ossec-re
 
 
 
-****APACHE****
+****INSTALACIÓN Y CONFIGURACIÓN DE APACHE****
 
 *Nota: Para poder probarlo hay que desactivar el OSSEC porque sino baneará la IP que esta atacando*
 
@@ -737,6 +737,7 @@ Para ello tenemos que ir al archivo de configuracion de mosecurity
 y añadir las siguientes lineas:
 
 Include /etc/apache2/modsec/coreruleset-3.3.4/crs-setup.conf
+
 Include /etc/apache2/modsec/coreruleset-3.3.4/rules/*.conf
 
 y comentaremos la siguiente:
@@ -750,9 +751,43 @@ De esta forma el ModSecurity utilizará las reglas que le hemos dicho en el arch
 systemctl restart apache2
 ```
 
+***PROBAR SERVIDOR APACHE CONTRA ATAQUES***
 
+1. Primero comprobamos que nuestro servidor responde:
+```
+curl http://10.11.48.207/
+```
+Si responde se nos mostrara un html por pantalla.
 
+2. Despues realizaremos un ataque SlowHttpTest a dicho servidor ( con el modsecurity desactivado):
 
+Desactivamos el modSecurity:
+
+```
+sudo a2dismod security2
+```
+
+```
+slowhttptest -c 1000 -H -g -o slowhttp -i 10 -r 200 -t GET -u http://10.11.48.207 -x 24 -p 3
+```
+Mientras esta siendo atacado si intentamos hacemos un curl vemos que no obtenemos respuesta, en cuando paremos el ataque obtendremos respuesta.
+
+3. A continuación activaremos el modSecurity que hemos configurado y reiniciaremos el servicio para ver que tenemos respuesta:
+
+```
+sudo a2enmod security2
+```
+
+Reiniciamos:
+
+```
+sudo a2enmod security2
+```
+
+4. Volvemos a realizar el ataque ( ahora con ModSecurity activado) 
+
+Veremos que en todo momento el servidor nunca deja de responder y si observamos en el atacante vemos que solo han obtenido conexión 50 peticiones de las 1000 que envíamos en el ataque y que 
+las otras 950 han sido cerradas debido a la configuración que hemos hecho en el modsecurity.
 
 
 **METASPOLOIT**
