@@ -655,6 +655,47 @@ cat /var/log/auth.log | /var/ossec/bin/ossec-logtest -a |/var/ossec/bin/ossec-re
 
 
 
+****APACHE****
+
+https://www.linuxcapable.com/how-to-install-modsecurity-with-apache-on-debian-linux/
+
+1. Desisntalar evasive y modsecurity en ambas maquinas ( igual apache tambien )
+2. sudo apt update && sudo apt upgrade
+4. sudo apt install apache2
+5. sudo apt install apt-transport-https lsb-release ca-certificates curl -y
+6. sudo apt update
+7. sudo apt-cache policy libapache2-mod-security2 modsecurity-crs libmodsecurity3
+   
+**MODSECURITY**
+1. sudo apt install libapache2-mod-security2
+2. sudo a2enmod security2
+3. sudo nano /etc/apache2/mods-enabled/security2.conf
+4. IncludeOptional /etc/modsecurity/*.conf
+5. sudo mv /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf
+6. sudo nano /etc/modsecurity/modsecurity.conf
+7. SecRuleEngine On
+8. SecAuditLogParts ABCEFHJKZ
+9. sudo systemctl restart apache2
+10. sudo mkdir /etc/apache2/modsec/
+11. wget https://github.com/coreruleset/coreruleset/archive/refs/tags/v3.3.4.zip
+12. sudo tar xvf v3.3.4.tar.gz -C /etc/apache2/modsec
+13. sudo cp /etc/apache2/modsec/coreruleset-3.3.4/crs-setup.conf.example /etc/apache2/modsec/coreruleset-3.3.4/crs-setup.conf
+14. sudo apt install unzip -y
+15. Include /etc/apache2/modsec/coreruleset-3.3.4/crs-setup.conf
+16. Include /etc/apache2/modsec/coreruleset-3.3.4/rules/*.conf
+17. IncludeOptional /usr/share/modsecurity-crs/*.load
+18. sudo systemctl restart apache2
+19. sudo nano /etc/apache2/modsec/coreruleset-3.3.4/crs-setup.conf
+20. https://www.yourdomain.com/index.html?exec=/bin/bash
+21. 
+
+
+
+
+
+
+
+
 
 
 
