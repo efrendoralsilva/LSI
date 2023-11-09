@@ -687,7 +687,20 @@ https://www.linuxcapable.com/how-to-install-modsecurity-with-apache-on-debian-li
 18. sudo systemctl restart apache2
 19. sudo nano /etc/apache2/modsec/coreruleset-3.3.4/crs-setup.conf
 20. https://www.yourdomain.com/index.html?exec=/bin/bash
-21. 
+
+
+**METASPOLOIT**
+
+https://www.linuxcapable.com/how-to-install-metasploit-framework-on-debian-linux/
+
+
+**PROMETHEUS**
+
+https://feriman.com/install-and-configure-prometheus-on-debian-10-11/
+
+**GRAFANA**
+
+https://www.server-world.info/en/note?os=Debian_12&p=grafana
 
 
 
