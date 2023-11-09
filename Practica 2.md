@@ -693,6 +693,10 @@ https://www.linuxcapable.com/how-to-install-modsecurity-with-apache-on-debian-li
 
 https://www.linuxcapable.com/how-to-install-metasploit-framework-on-debian-linux/
 
+https://orcacore.com/install-metasploit-debian-12-bookworm/
+
+https://medium.com/@marin.novak1988/what-is-metasploit-and-how-to-install-it-on-debian-2d592f6f618e
+
 
 **PROMETHEUS**
 
