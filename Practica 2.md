@@ -225,6 +225,9 @@ ip -s -s neigh flush all
 ```
 Vemos las ultimas líneas del registro de arpon, para comprobar que funciona, quien ha hecho el ataque debe haer un arp-a y ver que la Mac de la víctima no ha cambiado.
 
+ettercap -Tq -M arp:remote -P remote_browser /10.11.48.203// /10.11.48.1// -w /home/lsi/Descargas/apartado_arpon
+
+
 ```
 tail /var/log/arpon/arpon.log
 ```
