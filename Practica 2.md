@@ -857,9 +857,48 @@ atk6-alive6 ens33
 6. Transferencia de zona o similar:
 7. Arpon:
 8. Ossec ( Timeout = 120 seg ):
-9. Ataque DOS:
-10. Mod_Security:
-11. Grafan ( Dashboard 159):
+
+Ataque con medusa ( el txt tiene la contraseña bien en la posicion 10)
+
+```
+medusa -h 10.11.48.203 -u lsi -P password -M ssh
+
+```
+
+Para ver si ha baneado la IP:
+
+```
+iptables -L
+```
+
+```
+nano /etc/hosts.deny
+```
+
+Para desbanear la IP que hemos baneado del atacante:
+
+
+```
+/var/ossec/active-response/bin/host-deny.sh delete - 10.11.48.207
+
+```
+
+```
+/var/ossec/active-response/bin/firewall-drop.sh delete - 10.11.48.207
+
+```
+
+Para arrancar el ossec:
+
+```
+/var/ossec/bin/ossec-control start
+
+```
+
+  
+10. Ataque DOS:
+11. Mod_Security:
+12. Grafan ( Dashboard 159):
 
 
 
