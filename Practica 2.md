@@ -820,7 +820,7 @@ https://www.server-world.info/en/note?os=Debian_12&p=grafana
 
 ***DEFENSA PRACTICA 2***
 
-1. URL visitadas en tiempo real:
+**1. URL visitadas en tiempo real:**
 
 Archivo de configuración:
 
@@ -836,7 +836,7 @@ ettercap -Tq -M arp:remote -P remote_browser /10.11.48.203// /10.11.48.1// -w /h
 
 El que esta siendo atacado tiene que visitar una web con lynx ( que es el navegador que tenemos puesto en el /etc/ettercap.etter.conf
 
-2. Segmento 2002 y Local-links:
+**2. Segmento 2002 y Local-links:**
 
 Segmento 2002:
 
@@ -852,11 +852,15 @@ atk6-alive6 ens33
 ```
 
   
-4. Metasploit:
-5. Filtro ettercap:
-6. Transferencia de zona o similar:
-7. Arpon:
-8. Ossec ( Timeout = 120 seg ):
+**4. Metasploit:**
+
+**5. Filtro ettercap:**
+
+**6. Transferencia de zona o similar:**
+
+**7. Arpon:**
+
+**8. Ossec ( Timeout = 120 seg ):**
 
 Ataque con medusa ( el txt tiene la contraseña bien en la posicion 10)
 
@@ -896,9 +900,11 @@ Para arrancar el ossec:
 ```
 
   
-10. Ataque DOS:
-11. Mod_Security:
-12. Grafan ( Dashboard 159):
+**10. Ataque DOS:**
+
+**11. Mod_Security:**
+
+**12. Grafan ( Dashboard 159):**
 
 
 
