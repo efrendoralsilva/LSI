@@ -818,6 +818,24 @@ https://www.server-world.info/en/note?os=Debian_12&p=grafana
 
 
 
+***DEFENSA PRACTICA 2***
+
+1. URL visitadas en tiempo real:
+
+```
+```
+
+2. Segmento 2002 y Local-links:
+3. Metasploit:
+4. Filtro ettercap:
+5. Transferencia de zona o similar:
+6. Arpon:
+7. Ossec ( Timeout = 120 seg ):
+8. Ataque DOS:
+9. Mod_Security:
+10. Grafan ( Dashboard 159):
+
+
 
 
 
