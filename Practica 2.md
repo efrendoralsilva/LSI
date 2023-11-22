@@ -858,6 +858,21 @@ atk6-alive6 ens33
 
 **6. Transferencia de zona o similar:**
 
+Ver direccionamiento servidores DNS de usc.es
+```
+dig usc.es NS
+```
+Intentar transferencia de zona contra un servidor DNS
+
+```
+dig -t axfr secus.usc.es
+```
+
+Como falla intentamos hacer una resolucion inversa:
+
+```
+```
+
 **7. Arpon:**
 
 **8. Ossec ( Timeout = 120 seg ):**
