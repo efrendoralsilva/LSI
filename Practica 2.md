@@ -862,15 +862,17 @@ Ver direccionamiento servidores DNS de usc.es
 ```
 dig usc.es NS
 ```
-Intentar transferencia de zona contra un servidor DNS
+Intentar transferencia de zona contra un servidor DNS:
 
 ```
-dig -t axfr secus.usc.es
-```
+dig axfr @secus.usc.es usc.es
 
+```
 Como falla intentamos hacer una resolucion inversa:
+Resolucion inversa ( IP que nos sale al intentar la transferencia de zona)
 
 ```
+ dig -x 193.144.75.9
 ```
 
 **7. Arpon:**
