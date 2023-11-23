@@ -1066,7 +1066,17 @@ cat /home/lsi/check-space.txt
 
 **8. NTP:**
 
--> ntpq -p
+Para ver el archivo de configuración:
+
+```
+pico /etc/ntpsec/ntp.conf
+```
+
+Para ver si estamos sincronizados con el servidor:
+
+```
+ntpq -p
+```
 
 **9. Ryslog:**
 
