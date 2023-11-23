@@ -944,20 +944,57 @@ tail /var/log/rsyslog-server/10.11.48.203/root.log
 tail /var/log/rsyslog-server/10.11.48.203/root.log
 ```
 
+##Dudas a preguntar a Adrian ##
+
+
+Ver errores ( falla openimmi.service y el networkManager-wait-onlineservice y dev-tpm0.device )
+```
+journalctl -b -p err
+```
+
+La interfaz logica tiene que ser persistente?
+
 
 ### DEFENSA PRACTICA 1 ###
 
 
 1. Distro y kernel (no enseñamos kernel)
--> cat /etc/os-release
--> lsb_release -a
--> hostnamectl
+
+Ver distribucion instalada:
+
+```
+cat /etc/os-release
+```
+Mostra kerner de la maquina:
+
+```
+hostnamectl
+```
+
+3. Interfaz logico (dijo que no lo teniamos configurado) (nos mando hacer ifconfig)
+
+Crear un interfaz logico en ens34
+
+```
+ifconfig ens34:1 192.168.1.1 netmask 255.255.255.0
+```
+```
+ifconfig ens34:1 up
+```
+```
+ifconfig ens34 down
+```
+Como no lo hemos hecho persistente si queremos dejar todo como estaba solo tenemos que hacer reboot
+Para que sean cambios persistenes debemos hacerlo en /etc/network/interfaces
 
 
-2. Interfaz logico (dijo que no lo teniamos configurado) (nos mando hacer ifconfig)
 
--> cat /etc/network/interfaces
-
+```
+cat /etc/network/interfaces
+```
+```
+ifconfig -a
+```
 3. Target y boot time (tarda demasiado)
 
 -> systemctl get-default
