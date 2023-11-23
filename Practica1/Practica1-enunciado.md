@@ -945,6 +945,69 @@ tail /var/log/rsyslog-server/10.11.48.203/root.log
 ```
 
 
-## c) Haga todo tipo de propuestas sobre los siguientes aspectos.: ¿Qué problemas de seguridad identifica en los dos apartados anteriores?. ¿Cómo podría solucionar los problemas identificados?
-## d) En la plataforma de virtualización corren, entre otros equipos, más de 200 máquinas virtuales para LSI. Como los recursos son limitados, y el disco duro también, identifique todas aquellas acciones que pueda hacer para reducir el espacio de disco ocupado.
+### DEFENSA PRACTICA 1 ###
+
+
+1. Distro y kernel (no enseñamos kernel)
+-> cat /etc/os-release
+-> lsb_release -a
+-> hostnamectl
+
+
+2. Interfaz logico (dijo que no lo teniamos configurado) (nos mando hacer ifconfig)
+
+-> cat /etc/network/interfaces
+
+3. Target y boot time (tarda demasiado)
+
+-> systemctl get-default
+-> systemd-analyze
+
+4. Ipv6
+
+-> ping6 2002:0A0B:30CB::1
+
+5. Wrappers(añadir rsyslog/ntp) (y falta twist) 
+
+-> cat /etc/hosts.allow
+
+6. Ruta estatica ( 10.11.50.1 red 10.11.50.1)
+
+-> ip route add 10.11.52.0/23 dev ens34
+-> traceroute 10.11.52.7 ( no puede salir *)
+
+7. Servicio:
+
+Motrar estado:
+-> last-login.service
+
+-> pico /etc/systemd/system/last-login.service
+-> pico /usr/local/bin/last-login.sh
+
+8. NTP:
+
+-> ntpq -p
+
+9. Ryslog:
+
+Comprobar user.log
+
+-> pico /etc/rsyslog.conf
+
+Parar servicio:
+-> systemctl stop syslog.socket
+-> systemctl stop rsyslog.service
+
+Rearrancamos servicio y vemos que nos llegan los logs de cuando no estabamos inactivos
+-> systemctl restart rsyslog.service
+-> cat /var/log/rsyslog-server/10.11.48.203/root.log
+
+
+10. SPLUNK ( mostrar el mapa, fuera de España)
+
+
+
+
+
+
 
