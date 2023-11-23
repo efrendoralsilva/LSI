@@ -958,7 +958,7 @@ La interfaz logica tiene que ser persistente?
 ### DEFENSA PRACTICA 1 ###
 
 
-1. Distro y kernel (no enseñamos kernel)
+**1. Distro y kernel (no enseñamos kernel)**
 
 Ver distribucion instalada:
 
@@ -971,7 +971,7 @@ Mostra kerner de la maquina:
 hostnamectl
 ```
 
-3. Interfaz logico (dijo que no lo teniamos configurado) (nos mando hacer ifconfig)
+**2. Interfaz logico (dijo que no lo teniamos configurado) (nos mando hacer ifconfig)**
 
 Crear un interfaz logico en ens34
 
@@ -982,12 +982,10 @@ ifconfig ens34:1 192.168.1.1 netmask 255.255.255.0
 ifconfig ens34:1 up
 ```
 ```
-ifconfig ens34 down
+ifconfig ens34:1 down
 ```
 Como no lo hemos hecho persistente si queremos dejar todo como estaba solo tenemos que hacer reboot
 Para que sean cambios persistenes debemos hacerlo en /etc/network/interfaces
-
-
 
 ```
 cat /etc/network/interfaces
@@ -995,37 +993,82 @@ cat /etc/network/interfaces
 ```
 ifconfig -a
 ```
-3. Target y boot time (tarda demasiado)
 
--> systemctl get-default
--> systemd-analyze
+**3. Target y boot time (tarda demasiado)**
 
-4. Ipv6
+Mostrar target de la maquina:
+
+```
+systemctl get-default
+```
+
+Mostrar tiempo de botado:
+
+```
+systemd-analyze
+```
+
+**4. Ipv6**
 
 -> ping6 2002:0A0B:30CB::1
 
-5. Wrappers(añadir rsyslog/ntp) (y falta twist) 
+**5. Wrappers(añadir rsyslog/ntp) (y falta twist)**
 
 -> cat /etc/hosts.allow
 
-6. Ruta estatica ( 10.11.50.1 red 10.11.50.1)
+**6. Ruta estatica ( 10.11.50.1 red 10.11.50.1)**
 
--> ip route add 10.11.52.0/23 dev ens34
--> traceroute 10.11.52.7 ( no puede salir *)
+Mostrar rutas definidas en el sistema:
 
-7. Servicio:
+```
+ip route show
+```
 
-Motrar estado:
--> last-login.service
+Añadir nueva ruta que nos pide:
 
--> pico /etc/systemd/system/last-login.service
--> pico /usr/local/bin/last-login.sh
+```
+ip route add 10.11.52.0/23 dev ens34
+```
+comprobar que va por la ruta definida (no puede aparecer *)
 
-8. NTP:
+```
+traceroute 10.11.52.7
+```
+
+**7. Servicio:**
+
+El servicio escribira la fecha y el espacio en el directorio Home que hay en el sistema en la ruta de /home/lsi/ en un archivo txt que se llamda check-space.txt
+
+After: dice cuando debe ejecutarse el ScriptExec
+Start: proporciona el path del script para ser ejecutado.
+WantedBy: En que target del sistema tiene que ser instalado.
+
+Para ver el servicio
+```
+nano /etc/systemd/system/check-space.service
+```
+
+Creamos el script que ejecuta el servicio en /usr/local/bin
+
+Para ver el scriopt:
+
+```
+nano /usr/local/bin/check-space.sh
+```
+Para ver el report que hace:
+
+```
+cat /home/lsi/check-space.txt
+```
+
+
+
+
+**8. NTP:**
 
 -> ntpq -p
 
-9. Ryslog:
+**9. Ryslog:**
 
 Comprobar user.log
 
@@ -1040,7 +1083,7 @@ Rearrancamos servicio y vemos que nos llegan los logs de cuando no estabamos ina
 -> cat /var/log/rsyslog-server/10.11.48.203/root.log
 
 
-10. SPLUNK ( mostrar el mapa, fuera de España)
+**10. SPLUNK ( mostrar el mapa, fuera de España)**
 
 
 
