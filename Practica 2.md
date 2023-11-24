@@ -841,8 +841,11 @@ El que esta siendo atacado tiene que visitar una web con lynx ( que es el navega
 Segmento 2002:
 
 ¿ ES ESTE?
+
 ```
 ip -6 add show | grep 2002:
+
+```
 
 ```
 ip -6 neigh
