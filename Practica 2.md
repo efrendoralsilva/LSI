@@ -843,6 +843,9 @@ Segmento 2002:
 ¿ ES ESTE?
 ```
 ip -6 add show | grep 2002:
+
+```
+ip -6 neigh
 ```
 
 
