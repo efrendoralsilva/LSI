@@ -799,23 +799,6 @@ Veremos que en todo momento el servidor nunca deja de responder y si observamos 
 las otras 950 han sido cerradas debido a la configuración que hemos hecho en el modsecurity.
 
 
-**METASPOLOIT**
-
-https://www.linuxcapable.com/how-to-install-metasploit-framework-on-debian-linux/
-
-https://orcacore.com/install-metasploit-debian-12-bookworm/
-
-https://medium.com/@marin.novak1988/what-is-metasploit-and-how-to-install-it-on-debian-2d592f6f618e
-
-
-**PROMETHEUS**
-
-https://feriman.com/install-and-configure-prometheus-on-debian-10-11/
-
-**GRAFANA**
-
-https://www.server-world.info/en/note?os=Debian_12&p=grafana
-
 
 
 ***DEFENSA PRACTICA 2***
@@ -840,17 +823,9 @@ El que esta siendo atacado tiene que visitar una web con lynx ( que es el navega
 
 Segmento 2002:
 
-¿ ES ESTE?
-
-```
-ip -6 add show | grep 2002:
-
 ```
 
 ```
-ip -6 neigh
-```
-
 
 Local-Links:
 
@@ -865,22 +840,7 @@ atk6-alive6 ens33
 
 **6. Transferencia de zona o similar:**
 
-Ver direccionamiento servidores DNS de usc.es
-```
-dig usc.es NS
-```
-Intentar transferencia de zona contra un servidor DNS:
 
-```
-dig axfr @secus.usc.es usc.es
-
-```
-Como falla intentamos hacer una resolucion inversa:
-Resolucion inversa ( IP que nos sale al intentar la transferencia de zona)
-
-```
- dig -x 193.144.75.9
-```
 
 **7. Arpon:**
 
@@ -976,6 +936,8 @@ Para arrancar el ossec:
 **11. Mod_Security:**
 
 **12. Grafana ( Dashboard 159):**
+
+Cuando se ataque al server con un ataque de tipo POST el network tiene que superar los 100kb/s
 
 
 
