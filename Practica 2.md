@@ -900,10 +900,6 @@ dnsrecon -d usc.es -r 193.144.64.0-193.144.80.255
 
 **6. Arpon:**
 
-Para configurar arpon, abrimos el archivo de configuración y añadimos las IP y mac propia, la del compañero y la de router.
-```
-pico /etc/arpon.conf
-```
 
 Ver tabla de direccionamiento ARP:
 
@@ -920,7 +916,7 @@ systemctl start arpon@ens33
 
 Paramos arpon en ens33
 ```
-systemctl stop arpon@ens33
+systemctl stop arpon
 ```
 
 Comprobamos si el arpon esta desactivado, si lo esta tiene que aparecer la MAC del compañero en lugar de la Mac del router:
@@ -938,12 +934,8 @@ ip -s -s neigh flush all
 ```
 ettercap -Tq -M arp:remote -P remote_browser /10.11.48.203// /10.11.48.1// -w /home/lsi/Descargas/apartado_arpon
 ```
-Vemos las ultimas líneas del registro de arpon, para comprobar que funciona, quien ha hecho el ataque debe haer un arp-a y ver que la Mac de la víctima no ha cambiado.
 
-```
-tail /var/log/arpon/arpon.log
-
-```
+Si el arpon esta desactivado, en la victima en la tabla ARP aparecera la MAC del atacante en la ip del router, y si lo activamos no permitira que se cambie dicha MAC cuando reciba un ataque ARP remote_browser
 
 
 
