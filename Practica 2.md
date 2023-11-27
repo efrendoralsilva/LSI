@@ -880,13 +880,25 @@ sysinfo
 ```
 
 
-**5. Filtro ettercap:**
+**4. Filtro ettercap:**
 
-**6. Transferencia de zona o similar:**
+**5. Transferencia de zona o similar (usc.es):**
+
+Intento hacer transferencia de zona y falla, porque no estan confiurados para eso
+
+```
+dig usc.es axfr
+```
+Como no se puede intentamos hacer una resolucion inversa de un ragno de IPs pertenecientes a ese dominio:
+
+```
+dnsrecon -d usc.es -r 193.144.64.0-193.144.80.255
+
+```
 
 
 
-**7. Arpon:**
+**6. Arpon:**
 
 Para configurar arpon, abrimos el archivo de configuración y añadimos las IP y mac propia, la del compañero y la de router.
 ```
@@ -935,7 +947,7 @@ tail /var/log/arpon/arpon.log
 
 
 
-**8. Ossec ( Timeout = 120 seg ):**
+**7. Ossec ( Timeout = 120 seg ):**
 
 Ataque con medusa ( el txt tiene la contraseña bien en la posicion 10)
 
@@ -975,11 +987,11 @@ Para arrancar el ossec:
 ```
 
   
-**10. Ataque DOS:**
+**8. Ataque DOS:**
 
-**11. Mod_Security:**
+**9. Mod_Security:**
 
-**12. Grafana ( Dashboard 159):**
+**10. Grafana ( Dashboard 159):**
 
 Cuando se ataque al server con un ataque de tipo POST el network tiene que superar los 100kb/s
 
