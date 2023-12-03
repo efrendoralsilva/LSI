@@ -1068,7 +1068,7 @@ ip route del 10.11.52.0/24 via 10.11.50.1 dev ens34
 
 El servicio escribira la fecha y el espacio en el directorio Home que hay en el sistema en la ruta de /home/lsi/ en un archivo txt que se llamda check-space.txt
 
-After: dice cuando debe ejecutarse el ScriptExec
+After: dice cuando debe iniciarse ( en mi caso sera despues del local-fs.target que el encargado de montar el sistema de archivos local)
 Start: proporciona el path del script para ser ejecutado.
 WantedBy: En que target del sistema tiene que ser instalado.
 
