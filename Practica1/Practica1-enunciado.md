@@ -954,6 +954,22 @@ journalctl -b -p err
 
 La interfaz logica tiene que ser persistente?
 
+¿ Para añadir ntp y rsyslog al hosts.allow seria?
+
+```
+ntpd:10.11.48.203 :spawn echo %c $(date) >> /home/lsi/logntpd
+```
+
+```
+rsyslogd:10.11.48.203 :spawn echo %c $(date) >> /home/lsi/logrsyslogd
+```
+
+
+
+
+
+
+
 
 ### DEFENSA PRACTICA 1 ###
 
