@@ -969,6 +969,9 @@ Mostra kerner de la maquina:
 
 ```
 hostnamectl
+```7
+```
+uname -r
 ```
 
 **2. Interfaz logico (dijo que no lo teniamos configurado) (nos mando hacer ifconfig)**
