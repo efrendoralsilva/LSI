@@ -969,7 +969,8 @@ Mostra kerner de la maquina:
 
 ```
 hostnamectl
-```7
+```
+
 ```
 uname -r
 ```
@@ -1011,13 +1012,31 @@ Mostrar tiempo de botado:
 systemd-analyze
 ```
 
-**4. Ipv6**
+```
+systemd-analyze blame
+```
 
--> ping6 2002:0A0B:30CB::1
+```
+systemd-analyze critical-chain
+```
+
+**4. Ipv6**
+Hago un ping a la ip de Alex,la mia es: 2002:0A0B:30CF::1
+```
+ping6 2002:0A0B:30CB::1
+```
 
 **5. Wrappers(añadir rsyslog/ntp) (y falta twist)**
 
--> cat /etc/hosts.allow
+```
+ nano /etc/hosts.allow
+```
+
+```
+ nano /etc/hosts.deny
+```
+
+-> cat /etc/hosts.deny
 
 **6. Ruta estatica ( 10.11.50.1 red 10.11.50.1)**
 
@@ -1030,13 +1049,20 @@ ip route show
 Añadir nueva ruta que nos pide:
 
 ```
-ip route add 10.11.52.0/23 dev ens34
+ip route add 10.11.52.0/24 via 10.11.50.1 dev ens34
 ```
-comprobar que va por la ruta definida (no puede aparecer *)
+Comprobar que va por la ruta definida:
 
 ```
 traceroute 10.11.52.7
 ```
+
+Para eliminar la ruta:
+
+```
+ip route del 10.11.52.0/24 via 10.11.50.1 dev ens34
+```
+
 
 **7. Servicio:**
 
