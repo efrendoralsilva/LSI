@@ -958,7 +958,7 @@ La interfaz logica tiene que ser persistente?
 ### DEFENSA PRACTICA 1 ###
 
 
-**1. Distro y kernel (no enseñamos kernel)**
+**1. Distro y kernel**
 
 Ver distribucion instalada:
 
@@ -1026,7 +1026,7 @@ Hago un ping a la ip de Alex,la mia es: 2002:0A0B:30CF::1
 ping6 2002:0A0B:30CB::1
 ```
 
-**5. Wrappers(añadir rsyslog/ntp) (y falta twist)**
+**5. Wrappers**
 
 ```
  nano /etc/hosts.allow
