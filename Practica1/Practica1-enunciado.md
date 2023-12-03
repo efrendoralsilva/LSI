@@ -1107,6 +1107,26 @@ Para ver si estamos sincronizados con el servidor:
 ntpq -p
 ```
 
+Info adicional:
+
+
+**st:** El estrato del servidor, que indica la distancia desde la fuente primaria (reloj atómico). Los servidores con un estrato menor son considerados más confiables.
+
+**t:** El tipo de servidor, donde "u" significa un servidor no sincronizado.
+
+**when:**: El tiempo en segundos desde la última vez que se recibió una actualización desde el servidor NTP remoto.
+
+**poll:** El intervalo de tiempo, en segundos, entre las consultas de sincronización al servidor remoto.
+
+**reach:** Un número octal que indica cuántas veces se ha alcanzado el servidor remoto en las últimas 8 consultas.
+
+**delay:** El tiempo de ida y vuelta promedio hacia el servidor remoto, en milisegundos.
+
+**offset:** La diferencia de tiempo actual entre el servidor local y el servidor remoto, en milisegundos.
+
+**jitter:** La variabilidad en la diferencia de tiempo, en milisegundos.
+
+
 **9. Ryslog:**
 
 Comprobar user.log
