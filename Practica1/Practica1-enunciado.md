@@ -975,7 +975,7 @@ hostnamectl
 uname -r
 ```
 
-**2. Interfaz logico (dijo que no lo teniamos configurado) (nos mando hacer ifconfig)**
+**2. Interfaz logico**
 
 Crear un interfaz logico en ens34
 
