@@ -1129,17 +1129,38 @@ Info adicional:
 
 **9. Ryslog:**
 
-Comprobar user.log
+Para parar el rsyslog:
 
--> pico /etc/rsyslog.conf
+```
+systemctl stop syslog.socket
+```
 
-Parar servicio:
--> systemctl stop syslog.socket
--> systemctl stop rsyslog.service
+```
+systemctl stop rsyslog.service
+```
 
-Rearrancamos servicio y vemos que nos llegan los logs de cuando no estabamos inactivos
--> systemctl restart rsyslog.service
--> cat /var/log/rsyslog-server/10.11.48.203/root.log
+Para ver configuración del rsyslog:
+
+```
+nano /etc/rsyslog.conf
+```
+
+Pra reiniciar el servicio:
+
+```
+systemctl restart rsyslog.service
+```
+
+Para ver el log
+```
+tail -f /var/log/10.11.48.203/root.log
+```
+
+ALex nos manda un logger:
+
+```
+logger -p mail.err "mensaje1"
+```
 
 
 **10. SPLUNK ( mostrar el mapa, fuera de España)**
