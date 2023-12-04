@@ -1005,8 +1005,9 @@ nano /etc/hosts.deny
 
 Para ver lo que a denegado mi conexion:
 ```
-tail /var/ossec/active-response.log
+tail /var/ossec/logs/active-response.log
 ```
+
 
 
 Para desbanear la IP que hemos baneado del atacante:
