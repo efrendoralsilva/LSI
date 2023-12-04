@@ -1106,7 +1106,9 @@ Para ver el report que hace:
 cat /home/lsi/check-space.txt
 ```
 
-
+```
+systemctl start check-space.service
+```
 
 
 **8. NTP:**
