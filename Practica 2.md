@@ -901,7 +901,7 @@ exploit
 En la otra consola Lanzamos el ataque con el filtro que hemos creado:
 
 ```
-ettercap -Tq -F prueba_filtro.ef -i ens33 -P repoison_arp -M arp:remote /10.11.48.203// /10.11.48.1//
+ettercap -Tq -F prueba_filter_2.ef -i ens33 -P repoison_arp -M arp:remote /10.11.48.203// /10.11.48.1//
 
 ```
 
