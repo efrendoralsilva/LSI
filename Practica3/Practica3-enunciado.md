@@ -51,11 +51,7 @@ Hacemos cat y vemos que realmente tiene el mensaje que pusimos en la maquina ori
 
 --> cat /home/lsi/archivo_descifrado
 
-Comprobamos que no nos pide password conectandonos por ssh a la maquina del compañero:
 
-```
-ssh lsi@10.11.48.203
-```
 
 
 
@@ -99,6 +95,12 @@ cat ../keys/id_ed25519.pub >> authorized_keys
 
 ```
 cat ../keys/id_ecdsa.pub >> authorized_keys
+```
+
+Comprobamos que no nos pide password conectandonos por ssh a la maquina del compañero:
+
+```
+ssh lsi@10.11.48.203
 ```
 
 
