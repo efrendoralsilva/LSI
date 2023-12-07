@@ -56,6 +56,43 @@ Hacemos cat y vemos que realmente tiene el mensaje que pusimos en la maquina ori
 
 ***c. Configure su cliente y servidor para permitir conexiones basadas en un esquema de autenticación de usuario de clave pública***
 
+Como usuario lsi:
+
+```
+ssh-keygen -t rsa
+```
+
+```
+ssh-keygen -t ed25519
+```
+
+```
+ssh-keygen -t ecdsa
+```
+
+Compañerp desde ~/.ssh (Alex)
+
+```
+scp lsi@10.11.48.203:/home/lsi/.ssh/*.pub ../keys
+```
+
+```
+touch authorized_keys
+```
+
+```
+cat ../keys/id_rsa.pub >> authorized_keys
+```
+
+```
+cat ../keys/id_ed25519.pub >> authorized_keys
+```
+
+```
+cat ../keys/id_ecdsa.pub >> authorized_keys
+```
+
+
 ***d. Mediante túneles SSH securice algún servicio no seguro***
 
 ***e. “Exporte” un directorio y “móntelo” de forma remota sobre un túnel SSH***
