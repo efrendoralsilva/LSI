@@ -154,10 +154,32 @@ fusermount -u /home/lsi/Escritorio/testsshfs_remota_alex/
 ## 3. Tomando como base de trabajo el openVPN deberá configurar una VPN entre dos equipos virtuales del laboratorio que garanticen la confidencialidad entre sus comunicaciones.
 
 
+Alex hace de servidor, la clave la genera el y me la manda (clave.key) 
+
+Esa clave yo la muevo a /etc/openvpn
+
+Creamos los dos el archivo tunel.conf, la diferencia de el de alex al mio es simplemente la ip local/remote que estan intercambiadas y en el ifconfig que estan tambien intercambiadas. Importante meter el cipher AES-256-CBC
+
+Para levantar el túnel:
+
+Si al ejecutar el openvpn aparece un error que ponga "IOCTL busy resource" o algo parecido, significa que la vpn ya está levantada (vamos, que ya está funcionando)
+
+```
+openvpn --verb 5 --config/etc/openvpn/tunel.conf
+```
 
 
+Para comprobar el tunel hacer ping al otro extremo en mi caso a la ip de alex:
 
+```
+ ping 172.160.0.1
+```
 
+Si paramos el VPV dejara de ser efectivo el tuneo y no hara el ping:
+
+```
+systemctl stop openvpn
+```
 
 
 
