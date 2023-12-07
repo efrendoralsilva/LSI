@@ -73,6 +73,10 @@ ssh-keygen -t ecdsa
 Compañerp desde ~/.ssh (Alex)
 
 ```
+cd /home/lsi/.ssh
+```
+
+```
 scp lsi@10.11.48.203:/home/lsi/.ssh/*.pub ../keys
 ```
 
