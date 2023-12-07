@@ -55,7 +55,7 @@ Hacemos cat y vemos que realmente tiene el mensaje que pusimos en la maquina ori
 
 
 
-***c. Configure su cliente y servidor para permitir conexiones basadas en un esquema de autenticación de usuario de clave pública***
+***c. Configure su cliente y servidor para permitir conexiones basadas en un esquema de autenticación de usuario de clave pública*** REVISAR QUE A MI ME PIDE LA CONTRASEÑA CUANDO HAGO SSH A LA MAQUINA DE Alex
 
 Como usuario lsi:
 
@@ -119,15 +119,25 @@ w3m http://10.11.48.207:10080/
 Si hacemos exit es decir cerramos la conexion que abrimos para el túnel y volvemos a hacer la peticion sobre el puerto 10080 no nos dara respuesta
 
 
-
-
-
-
-
-
-
-
 ***e. “Exporte” un directorio y “móntelo” de forma remota sobre un túnel SSH***
+
+
+Creamos un directorio en nuestra maquina donde montaremos el remoto:
+```
+mkdir testsshfs_remota_alex
+```
+
+Exportaremos el directorio de alex /home/lsi/Escritorio/sshfs2 en el directorio que hemos creado:
+
+```
+sshfs lsi@10.11.48.203:/home/lsi/Escritorio/sshfs2 /home/lsi/Escritorio/testsshfs_remota_alex/
+```
+
+Para desmontar el directorio que habiamos montado:
+
+```
+fusermount -u /home/lsi/Escritorio/testsshfs_remota_alex/
+```
 
 ***f. PARA PLANTEAR DE FORMA TEÓRICA.: Securice su sevidor considerando que únicamente dará servicio ssh para sesiones de usuario desde determinadas IPs.***
 
