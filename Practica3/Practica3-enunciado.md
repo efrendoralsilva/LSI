@@ -27,6 +27,33 @@ Vemos que no nos pone el mensaje de add new fingerprint, por lo que está bien c
 
 ***b. Haga una copia remota de un fichero utilizando un algoritmo de cifrado determinado. Analice el proceso que se realiza***
 
+
+APARTADO 1B FUNCIONANDO PERFECTAMENTE:Haga una copia remota de un fichero utilizando un algoritmo de cifrado determinado.
+Analice el proceso que se realiza.
+
+Ciframos el archivo que queremos enviar (nos pedira una passwd, ponemos la que queramos, en este caso ciframos con aes-256-cbs):
+
+--> openssl aes-256-cbc -e -in archivo_que_queremos_cifrar.txt -out archivo_cifrado.txt
+
+Le pasamos el archivo al compañero mediante una comunicacion cifrada(en este caso cifrados con aes128-ctr)
+
+--> scp -c aes128-ctr archivo_cifrado.txt lsi@10.11.48.203:/home/lsi/archivo_cifrado_destino.txt
+
+Hacemos un cat desde el compañero para ver que efectivamente esta cifrado:
+
+--> cat /home/lsi/archivo_cifrado_destino
+
+Desciframos el archivo ( nos pedira la passwd que metimos al cifrar)
+
+--> openssl aes-256-cbc -d -in archivo_cifrado_destino.txt -out archivo_descifrado.txt
+
+Hacemos cat y vemos que realmente tiene el mensaje que pusimos en la maquina origen:
+
+--> cat /home/lsi/archivo_descifrado
+
+
+
+
 ***c. Configure su cliente y servidor para permitir conexiones basadas en un esquema de autenticación de usuario de clave pública***
 
 ***d. Mediante túneles SSH securice algún servicio no seguro***
