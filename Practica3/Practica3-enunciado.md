@@ -106,6 +106,27 @@ ssh lsi@10.11.48.203
 
 ***d. Mediante túneles SSH securice algún servicio no seguro***
 
+Creamos el tunel SSH para securizar apache ( puerto 80)
+```
+ssh -P -L 10.11.48.207:10080:10.11.48.203:80 lsi@10.11.48.203
+```
+
+Para probarlo realizamos una peticion a traves de ese puerto ( Alex hace una peticion contra mi apache)
+```
+w3m http://10.11.48.207:10080/
+```
+
+Si hacemos exit es decir cerramos la conexion que abrimos para el túnel y volvemos a hacer la peticion sobre el puerto 10080 no nos dara respuesta
+
+
+
+
+
+
+
+
+
+
 ***e. “Exporte” un directorio y “móntelo” de forma remota sobre un túnel SSH***
 
 ***f. PARA PLANTEAR DE FORMA TEÓRICA.: Securice su sevidor considerando que únicamente dará servicio ssh para sesiones de usuario desde determinadas IPs.***
