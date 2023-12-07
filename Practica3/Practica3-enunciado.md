@@ -154,6 +154,20 @@ fusermount -u /home/lsi/Escritorio/testsshfs_remota_alex/
 ## 3. Tomando como base de trabajo el openVPN deberá configurar una VPN entre dos equipos virtuales del laboratorio que garanticen la confidencialidad entre sus comunicaciones.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 6. En este punto, cada máquina virtual será servidor y cliente de diversos servicios (NTP, syslog, ssh, web, etc.). Configure un “firewall stateful” de máquina adecuado a la situación actual de su máquina.
 
 
