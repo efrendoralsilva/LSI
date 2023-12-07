@@ -181,16 +181,31 @@ Si paramos el VPV dejara de ser efectivo el tuneo y no hara el ping:
 systemctl stop openvpn
 ```
 
-
-
-
-
-
-
-
-
-
 ## 6. En este punto, cada máquina virtual será servidor y cliente de diversos servicios (NTP, syslog, ssh, web, etc.). Configure un “firewall stateful” de máquina adecuado a la situación actual de su máquina.
 
 
 ## 7. Ejecute la utilidad de auditoría de seguridad lynis en su sistema y trate de identificar las acciones de securización detectadas así como los consejos sobre las que se deberían contemplar.
+
+```
+ apt-get install lynis
+```
+
+```
+lynis audit system
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
