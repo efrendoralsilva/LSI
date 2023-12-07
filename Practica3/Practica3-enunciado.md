@@ -4,6 +4,27 @@
 
 ***a. Abra un shell remoto sobre SSH y analice el proceso que se realiza. Configure su fichero ssh_known_hosts para dar soporte a la clave pública del servidor***
 
+1. Creamos el archivo ssh_known_hosts y metemos en él el output del ssh-keyscan a la IP de nuestro compañero:
+
+```
+touch /etc/ssh/ssh_known_hosts
+```
+
+```
+ssh-keyscan 10.11.48.203 >> /etc/ssh/ssh_known_hosts
+```
+
+2. Vaciamos el archivo known_hosts de nuestro .ssh y probamos a hacer ssh:
+
+```
+echo "" > /home/lsi/.ssh/known_hosts
+```
+```
+ssh lsi@10.11.48.203
+```
+Vemos que no nos pone el mensaje de add new fingerprint, por lo que está bien configurado.
+
+
 ***b. Haga una copia remota de un fichero utilizando un algoritmo de cifrado determinado. Analice el proceso que se realiza***
 
 ***c. Configure su cliente y servidor para permitir conexiones basadas en un esquema de autenticación de usuario de clave pública***
