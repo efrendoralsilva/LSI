@@ -137,6 +137,8 @@ w3m http://10.11.48.207:10080/
 Si hacemos exit es decir cerramos la conexion que abrimos para el túnel y volvemos a hacer la peticion sobre el puerto 10080 no nos dara respuesta
 
 
+Nota: Tenemos que tener configurado en el firewall ese puerto, sino cuando establezcamos las reglas no nos dara respuesta el apache con el puerto 10080
+
 ***e. “Exporte” un directorio y “móntelo” de forma remota sobre un túnel SSH***
 
 
