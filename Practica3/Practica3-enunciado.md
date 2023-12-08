@@ -303,6 +303,7 @@ systemctl stop openvpn
 
 ## 6. En este punto, cada máquina virtual será servidor y cliente de diversos servicios (NTP, syslog, ssh, web, etc.). Configure un “firewall stateful” de máquina adecuado a la situación actual de su máquina.
 
+El firewall que tengo en la maquina es el mismo que tengo en la carpeta Practica3 5-12-2023
 
 ## 7. Ejecute la utilidad de auditoría de seguridad lynis en su sistema y trate de identificar las acciones de securización detectadas así como los consejos sobre las que se deberían contemplar.
 
