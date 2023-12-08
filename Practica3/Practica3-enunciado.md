@@ -144,11 +144,111 @@ fusermount -u /home/lsi/Escritorio/testsshfs_remota_alex/
 
 ## 2. Tomando como base de trabajo el servidor Apache2
 
+
 ***a. Configure una Autoridad Certificadora en su equipo.***
+
+```
+cd /usr/lib/ssl/misc
+```
+
+```
+./CA.pl -newca
+```
 
 ***b. Cree su propio certificado para ser firmado por la Autoridad Certificadora. Bueno, y fírmelo.***
 
+Generamos el certificado:
+```
+./CA.pl -newreq-nodes
+```
+
+Firmamos el certificado:
+
+```
+./CA.pl -sign
+```
+
 ***c. Configure su Apache para que únicamente proporcione acceso a un determinado directorio del árbol web bajo la condición del uso de SSL. Considere que si su la clave privada está cifrada en el proceso de arranque su máquina le solicitará la correspondiente frase de paso, pudiendo dejarla inalcanzable para su sesión ssh de trabajo.***
+
+
+Habilitamos SSL:
+```
+cd /etc/apache2
+```
+
+```
+a2enmod ssl
+```
+
+```
+ systemctl restart apache2
+```
+
+```
+cp newcert.pem /etc/ssl/certs/cert.crt
+```
+
+```
+cp newkey.pem /etc/ssl/private/keysandro.key
+
+```
+
+Nos colocamos en el directorio /usr/lib/ssl/misc/demoCA y ejecutamos:
+
+```
+cp cacert.pem /usr/local/share/ca-certificates/cacert.crt
+```
+Hacemos update de los certificados:
+
+```
+update-ca-certificates
+```
+
+```
+cp -p /usr/lib/ssl/misc/demoCA/cacert.pem /etc/ssl/certs/cacert.pem
+```
+
+Obtenemos el hash (lo anotamos para despues comprobar el certificado) (d939aaf8)
+
+```
+openssl x509 -in cacert.pem -noout -hash
+```
+
+Creamos un enlace simbolico a ese hash:
+```
+ln -s cacert.pem d939aaf8.0
+```
+Verifacmos si esta correcto ( si es asi nos devolvera OK):
+```
+openssl verify cacert.pem
+```
+
+Una vez en este punto meteremos el certificado en nuestro servidor apache:
+
+Abrimos el ardchivo de configuracion de SSL:
+```
+nano /etc/apache2/sites-available/default-ssl.conf
+```
+y lo configuramos de la siguiente manera , indicandole las rutas donde se encuentra el certificado firmado, la CPriv del certificado y la CPriv de la CA, y la ruta del directorio que se abrira cuando la conexion sea segura a traves del puerto https (443):
+
+```
+<VirtualHost *:443>
+
+     SSLEngine On
+     SSLCertificateFile /etc/ssl/certs/cert.crt
+     SSLCertificateKeyFile /etc/ssl/private/key.key
+     SSLCACertificateFile /etc/ssl/certs/cacert.pem
+
+     ServerAdmin webmaster@localhost
+     DocumentRoot /var/www/html/prueba
+     
+     ErrorLog ${APACHE_LOG_DIR}/error.log
+     CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+
+```
+
+Luego me cree un directorio prueba en /var/www/
 
 
 ## 3. Tomando como base de trabajo el openVPN deberá configurar una VPN entre dos equipos virtuales del laboratorio que garanticen la confidencialidad entre sus comunicaciones.
@@ -193,19 +293,6 @@ systemctl stop openvpn
 ```
 lynis audit system
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
