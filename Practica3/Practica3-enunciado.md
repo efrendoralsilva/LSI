@@ -28,36 +28,52 @@ Vemos que no nos pone el mensaje de add new fingerprint, por lo que está bien c
 ***b. Haga una copia remota de un fichero utilizando un algoritmo de cifrado determinado. Analice el proceso que se realiza***
 
 
-APARTADO 1B FUNCIONANDO PERFECTAMENTE:Haga una copia remota de un fichero utilizando un algoritmo de cifrado determinado.
-Analice el proceso que se realiza.
+Creamos un archivo de texto que utilizaremos para la copia remota:
 
-Ciframos el archivo que queremos enviar (nos pedira una passwd, ponemos la que queramos, en este caso ciframos con aes-256-cbs):
+```
+nano archivo_a_cifrar
+```
 
---> openssl aes-256-cbc -e -in archivo_que_queremos_cifrar.txt -out archivo_cifrado.txt
+A continuacion vamos a cifrar ese archivo:
+
+```
+openssl aes-256-cbc -e -in archivo_a_cifrart -out archivo_cifrado
+```
+
+Podemos hacer un cat de archivo_cifrado para ver que efectivamente esta cifrado:
+
+```
+cat archivo_cifrado
+```
 
 Le pasamos el archivo al compañero mediante una comunicacion cifrada(en este caso cifrados con aes128-ctr)
 
---> scp -c aes128-ctr archivo_cifrado.txt lsi@10.11.48.203:/home/lsi/archivo_cifrado_destino.txt
+```
+scp -c aes128-ctr archivo_cifrado lsi@10.11.48.203:/home/lsi/archivo_cifrado_destino
+```
 
-Hacemos un cat desde el compañero para ver que efectivamente esta cifrado:
+El compañero tiene que comprobar que efectivamente el archivo le ha llegado:
 
---> cat /home/lsi/archivo_cifrado_destino
+```
+cat /home/lsi/archivo_cifrado_destino
+```
 
-Desciframos el archivo ( nos pedira la passwd que metimos al cifrar)
+Desciframos el archivo cifrado que nos ha enviado el compañero ( nos pedira la passwd que puismos al cifrar, en nuestro caso 1234):
 
---> openssl aes-256-cbc -d -in archivo_cifrado_destino.txt -out archivo_descifrado.txt
+```
+openssl aes-256-cbc -d -in archivo_cifrado_destino -out archivo_descifrado
+```
 
-Hacemos cat y vemos que realmente tiene el mensaje que pusimos en la maquina origen:
+Comprobamos que efectivamente el archibo que hemos recibido es igual al que enviamos desde la maquina origen una vez descifrado:
 
---> cat /home/lsi/archivo_descifrado
+```
+cat /home/lsi/archivo_descifrado
+```
 
 
+***c. Configure su cliente y servidor para permitir conexiones basadas en un esquema de autenticación de usuario de clave pública***
 
-
-
-***c. Configure su cliente y servidor para permitir conexiones basadas en un esquema de autenticación de usuario de clave pública*** REVISAR QUE A MI ME PIDE LA CONTRASEÑA CUANDO HAGO SSH A LA MAQUINA DE Alex
-
-Como usuario lsi:
+Genero las claves desde mi máquina con el usuario LSI:
 
 ```
 ssh-keygen -t rsa
@@ -71,19 +87,21 @@ ssh-keygen -t ed25519
 ssh-keygen -t ecdsa
 ```
 
-Compañerp desde ~/.ssh (Alex)
+Mi compañero pilla mis claves desde root@debian:/home/lsi/.ssh : ( como root)
 
 ```
 cd /home/lsi/.ssh
 ```
 
 ```
-scp lsi@10.11.48.203:/home/lsi/.ssh/*.pub ../keys
+scp lsi@10.11.48.207:/home/lsi/.ssh/*.pub ../keys
 ```
 
 ```
 touch authorized_keys
 ```
+
+Metemos las claves en authorized_keys:
 
 ```
 cat ../keys/id_rsa.pub >> authorized_keys
@@ -97,7 +115,7 @@ cat ../keys/id_ed25519.pub >> authorized_keys
 cat ../keys/id_ecdsa.pub >> authorized_keys
 ```
 
-Comprobamos que no nos pide password conectandonos por ssh a la maquina del compañero:
+Comprobamos que no nos pide password conectandonos por ssh a la maquina del compañero desde el usuario LSI:
 
 ```
 ssh lsi@10.11.48.203
