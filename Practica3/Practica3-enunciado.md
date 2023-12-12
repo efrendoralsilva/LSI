@@ -167,6 +167,14 @@ fusermount -u /home/lsi/Escritorio/testsshfs_remota_alex/
 
 ***f. PARA PLANTEAR DE FORMA TEÓRICA.: Securice su sevidor considerando que únicamente dará servicio ssh para sesiones de usuario desde determinadas IPs.***
 
+En e archio de configuracion de ssh ( /etc/ssh/sshd_config ) tendremos que poner solo las IP a las que queremos dar acceso, de la siguiente forma: 
+AllowUsers usuario@ip1 usuario@ip2
+
+Y tambien podemos hacerlo mediante reglas de firewall que es lo que haremos al final de esta practica, permitiendo solo las conexiones que nos interesen a nuestro servidor.
+
+
+
+
 
 ## 2. Tomando como base de trabajo el servidor Apache2
 
