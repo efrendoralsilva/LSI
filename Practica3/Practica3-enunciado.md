@@ -123,7 +123,7 @@ Comprobamos que no nos pide password conectandonos por ssh a la maquina del comp
 ssh lsi@10.11.48.203
 ```
 
-El procedimiento que seguimos aqui es comaprtir la clave pública del cliente con el servidor al que nos queremos conectar por ssh, dicho servidor almacenara esta clave publica del cliente en el fichero **authorized_keys**, por lo tanto cuando ese cliente intente conectarse mirara en ese fichero y e cliente se autenticara mediantes clave publica en lugar de passwd, ya que el servidor lo esta "autorizando".
+El procedimiento que seguimos aqui es comaprtir la clave pública del cliente con el servidor al que nos queremos conectar por ssh, dicho servidor almacenara esta clave publica del cliente en el fichero **authorized_keys**, por lo tanto cuando ese cliente intente conectarse mirara en ese fichero y e cliente se autenticara mediantes clave publica en lugar de passwd, ya que el servidor lo esta "autorizando". Podemos comprobar que dicha conexión se ha establecido de esta manera, comprobanro el /var/log/auth.log.
 
 
 
