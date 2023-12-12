@@ -223,7 +223,7 @@ cp newcert.pem /etc/ssl/certs/cert.crt
 ```
 
 ```
-cp newkey.pem /etc/ssl/private/keysandro.key
+cp newkey.pem /etc/ssl/private/key.key
 
 ```
 
