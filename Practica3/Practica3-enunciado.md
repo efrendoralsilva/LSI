@@ -24,7 +24,7 @@ ssh lsi@10.11.48.203
 ```
 Vemos que no nos pone el mensaje de add new fingerprint, por lo que está bien configurado.
 
-El archivo /etc/ssh/ssh_known_hosts se utiliza para almacenar las claves públicas de hosts remotos a los que se ha conectado a través de SSH, es decir claves publicas de servidores a los que nos hemos conectado, si nos conectamos a algun por primera vez es decir no lo "conocemos" saltara lo del fingerprint.
+El archivo **/etc/ssh/ssh_known_hosts** se utiliza para almacenar las claves públicas de hosts remotos a los que se ha conectado a través de SSH, es decir claves publicas de servidores a los que nos hemos conectado, si nos conectamos a algun por primera vez es decir no lo "conocemos" saltara lo del fingerprint.
 
 
 ***b. Haga una copia remota de un fichero utilizando un algoritmo de cifrado determinado. Analice el proceso que se realiza***
@@ -122,6 +122,10 @@ Comprobamos que no nos pide password conectandonos por ssh a la maquina del comp
 ```
 ssh lsi@10.11.48.203
 ```
+
+El procedimiento que seguimos aqui es comaprtir la clave pública del cliente con el servidor al que nos queremos conectar por ssh, dicho servidor almacenara esta clave publica del cliente en el fichero **authorized_keys**, por lo tanto cuando ese cliente intente conectarse mirara en ese fichero y e cliente se autenticara mediantes clave publica en lugar de passwd, ya que el servidor lo esta "autorizando".
+
+
 
 
 ***d. Mediante túneles SSH securice algún servicio no seguro***
